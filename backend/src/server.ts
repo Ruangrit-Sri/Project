@@ -6,6 +6,8 @@ import { pino } from "pino";
 import { env } from "@common/utils/envConfig";
 import errorHandler from "@common/middleware/errorHandler";
 
+import { categoryRouter } from "@modules/categories/categoryRouter";
+
 const logger = pino({ name: "server start" });
 const app = express();
 
@@ -17,6 +19,7 @@ app.use(cors({ origin: env.CORS_ORIGIN, credentials: true }));
 app.use(helmet());
 
 // Routes
+app.use("/v1/category", categoryRouter);
 
 // test
 app.use("/test", (req: Request, res: Response) => {
