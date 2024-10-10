@@ -20,6 +20,23 @@ CREATE TABLE "product" (
     CONSTRAINT "product_pkey" PRIMARY KEY ("id")
 );
 
+--CreateTable
+CREATE TABLE "project"(
+    "project _id" UUID NOT NULL,
+    "project_name" TEXT NOT NULL,
+    "bunget" DOUBLE PRECISION NOT NULL,
+    "start_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "end_date" TIMESTAMP(3),
+    -- "status"                      
+    -- "project_image"
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "created_by" TEXT NOT NULL,
+    "updated_at" TIMESTAMP(3),
+    "update__by" TEXT NOT NULL
+
+    CONSTRAINT "project_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "categories_category_name_key" ON "categories"("category_name");
 
