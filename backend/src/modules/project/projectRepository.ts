@@ -1,5 +1,5 @@
 import prisma from "@src/db";
-import { Project } from "@prisma/client"; // เปลี่ยนชื่อเป็น Project
+import { project } from "@prisma/client"; 
 import { TypePayloadProject } from "@modules/project/projectModel";
 
 export const Keys = [
@@ -18,7 +18,7 @@ export const Keys = [
 
 export const ProjectRepository = {
     findAllAsync: async () => {
-        return prisma.Project.findMany({
+        return prisma.project.findMany({
             select: {
                 project_id: true,
                 project_name: true
@@ -30,10 +30,10 @@ export const ProjectRepository = {
         project_name: string,
         keys = Keys as Key[]
     ) => {
-        return prisma.Project.findUnique({
+        return prisma.project.findUnique({
             where: { project_name: project_name },
             select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {}),
-        }) as Promise<Pick<Project, Key> | null>;
+        }) as Promise<Pick<project, Key> | null>;
     },
     
     create: async (payload: TypePayloadProject) => {
@@ -42,8 +42,9 @@ export const ProjectRepository = {
             project_name: project_name
         }
 
-        return await prisma.Project.create({
+        return await prisma.project.create({
             data: setPayload,
         });
     }
 }
+
