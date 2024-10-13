@@ -26,7 +26,7 @@ export const ProjectRepository = {
         });
     },
     
-    findByName: async <Key extends keyof Project>(
+    findByName: async <Key extends keyof project>(
         project_name: string,
         keys = Keys as Key[]
     ) => {

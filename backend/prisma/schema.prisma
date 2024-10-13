@@ -28,7 +28,7 @@ model product {
 }
 
 // Project Model
-model Project {
+model project {
   project_id     String   @id @default(uuid()) @db.Uuid
   project_name   String   @db.VarChar(255)              
   budget         Decimal? @db.Decimal(15, 2)           
