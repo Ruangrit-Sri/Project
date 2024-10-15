@@ -1,11 +1,47 @@
 import { z } from "zod";
 
+// ประเภทข้อมูลสำหรับ payload ของโปรเจกต์
 export type TypePayloadProject = {
     project_name: string;
+    budget?: number;   // อาจมี budget ในการอัปเดตด้วย
+    start_date?: string;
+    end_date?: string;
+    status?: string;
+    project_image?: string;
+    created_by?: string;
+    updated_by?: string;
 };
 
+// Schema สำหรับการสร้างโปรเจกต์ใหม่
 export const CreateProjectSchema = z.object({
     body: z.object({
         project_name: z.string().max(50),
+        budget: z.number().optional(),         // สามารถระบุหรือไม่ระบุก็ได้
+        start_date: z.string().optional(),
+        end_date: z.string().optional(),
+        status: z.string().optional(),
+        project_image: z.string().optional(),
+        created_by: z.string().optional(),
+        updated_by: z.string().optional()
     })
-})
+});
+
+// Schema สำหรับการอัปเดตโปรเจกต์
+export const UpdateProjectSchema = z.object({
+    body: z.object({
+        project_name: z.string().max(50).optional(),
+        budget: z.number().optional(),
+        start_date: z.string().optional(),
+        end_date: z.string().optional(),
+        status: z.string().optional(),
+        project_image: z.string().optional(),
+        updated_by: z.string()  // ต้องมี updated_by เพื่อบันทึกว่าใครแก้ไข
+    })
+});
+
+// Schema สำหรับการลบโปรเจกต์ (จริงๆ ไม่ต้องมี body เพราะใช้แค่ project_id จาก URL)
+export const DeleteProjectSchema = z.object({
+    params: z.object({
+        project_id: z.string().uuid()
+    })
+});
