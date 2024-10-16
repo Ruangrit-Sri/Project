@@ -42,11 +42,11 @@ model project {
   updated_by     String?                              
 }
 
-// UserModel
+// User Model
 model user {
   user_id       String   @id @default(uuid()) @db.Uuid
   project_id    String?  @db.Uuid
-  role_id       String  @db.Uuid
+  role_id       String?  @db.Uuid
   username      String   @db.VarChar(255)
   password_hash String   @db.VarChar(255)
   created_at    DateTime @default(now())
@@ -58,4 +58,4 @@ model user {
   // role    role    @relation(fields: [role_id], references: [role_id])
 }
 
-// User Model
+// Roles Model

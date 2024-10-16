@@ -1,49 +1,77 @@
-import { PrismaClient } from '@prisma/client';
-import { user } from "@prisma/client";
+import prisma from "@src/db"; 
+import { user } from "@prisma/client";  // ชื่อที่ตรงกับ schema ของ Prisma
 import { TypePayloadUser } from "@modules/user/userModel";
 
-const prisma = new PrismaClient();
+export const UserKeys = [
+    "user_id",
+    "project_id",
+    "role_id",
+    "username",
+    "password_hash",
+    "created_at",
+    "created_by",
+    "updated_at",
+    "updated_by"
+];
 
-export class UserRepository {
-  async createUser(user: Omit<User, 'user_id'>): Promise<User> {
-    return await prisma.user.create({
-      data: {
-        project_id: user.project_id,
-        role_id: user.role_id,
-        username: user.username,
-        password_hash: user.password_hash,
-        created_by: user.created_by,
-        updated_by: user.updated_by,
-      },
-    });
-  }
+export const UserRepository = {
+    // ค้นหาผู้ใช้ทั้งหมด
+    findAllAsync: async () => {
+        return prisma.user.findMany({
+            select: {
+                user_id: true,
+                project_id: true,
+                role_id: true,
+                username: true,
+                password_hash: true,
+                created_at: true,
+                created_by: true,
+                updated_at: true,
+                updated_by: true
+            }
+        });
+    },
 
-  async getUserById(user_id: string): Promise<User | null> {
-    return await prisma.user.findUnique({
-      where: { user_id },
-    });
-  }
+    // ค้นหาผู้ใช้ตาม username
+    findByUsername: async <Key extends keyof user>(
+        username: string,
+        keys = UserKeys as Key[]
+    ) => {
+        return prisma.user.findFirst({
+            where: { username: username },
+            select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {}),
+        }) as Promise<Pick<user, Key> | null>;
+    },
 
-  async updateUser(user_id: string, user: Partial<Omit<User, 'user_id'>>): Promise<User | null> {
-    return await prisma.user.update({
-      where: { user_id },
-      data: {
-        project_id: user.project_id,
-        role_id: user.role_id,
-        username: user.username,
-        password_hash: user.password_hash,
-        updated_by: user.updated_by,
-      },
-    });
-  }
+    // สร้างผู้ใช้ใหม่
+    create: async (payload: TypePayloadUser) => {
+        const username = payload.username.trim();
+        const setPayload: any = {
+            project_id: payload.project_id,
+            role_id: payload.role_id,
+            username: username,
+            password_hash: payload.password_hash,
+            created_by: payload.created_by,
+            updated_by: payload.updated_by,
+        };
 
-  async deleteUser(user_id: string): Promise<void> {
-    await prisma.user.delete({
-      where: { user_id },
-    });
-  }
+        return await prisma.user.create({
+            data: setPayload
+        });
+    },
 
-  async getAllUsers(): Promise<User[]> {
-    return await prisma.user.findMany();
-  }
-}
+    // อัปเดตข้อมูลผู้ใช้
+    update: async (user_id: string, payload: Partial<TypePayloadUser>) => {
+        return await prisma.user.update({
+            where: { user_id: user_id },
+            data: payload
+        });
+    },
+
+    // ลบผู้ใช้
+    delete: async (user_id: string) => {
+        return await prisma.user.delete({
+            where: { user_id: user_id }
+        });
+    }
+};
