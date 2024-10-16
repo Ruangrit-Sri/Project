@@ -20,21 +20,20 @@ CREATE TABLE "product" (
     CONSTRAINT "product_pkey" PRIMARY KEY ("id")
 );
 
---CreateTable
+-- CreateTable
 CREATE TABLE "project"(
-    "project _id" UUID NOT NULL,
+    "project_id" UUID NOT NULL,  -- แก้ไขชื่อคอลัมน์
     "project_name" TEXT NOT NULL,
-    "bunget" DOUBLE PRECISION NOT NULL,
+    "budget" DOUBLE PRECISION NOT NULL,  -- แก้ไขสะกด
     "start_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "end_date" TIMESTAMP(3),
-    -- "status"                      
-    -- "project_image"
+    "status" TEXT,  -- เพิ่มคอลัมน์ "status"
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "created_by" TEXT NOT NULL,
     "updated_at" TIMESTAMP(3),
-    "update__by" TEXT NOT NULL
+    "updated_by" TEXT NOT NULL,  -- แก้ไขจาก "update__by"
 
-    CONSTRAINT "project_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "project_pkey" PRIMARY KEY ("project_id")  -- แก้ไขคอลัมน์ที่เป็น Primary Key
 );
 
 -- CreateIndex

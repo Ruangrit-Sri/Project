@@ -22,8 +22,8 @@ export const projectRouter = (() => {
     });
 
     // UPDATE a project
-    router.put("/update/:project_id", validateRequest(UpdateProjectSchema), async (req: Request, res: Response) => {
-        const project_id = req.params.project_id;
+    router.put("/update", validateRequest(UpdateProjectSchema), async (req: Request, res: Response) => {
+        const {project_id} = req.body;
         const payload = req.body;
         const ServiceResponse = await projectService.update(project_id, payload);
         handleServiceResponse(ServiceResponse, res);

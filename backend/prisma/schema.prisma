@@ -32,15 +32,30 @@ model project {
   project_id     String   @id @default(uuid()) @db.Uuid
   project_name   String   @unique               
   budget         Decimal? @db.Decimal(15, 2)           
-  start_date     DateTime @db.Date                    
-  end_date       DateTime? @db.Date                    
+  start_date     String                    
+  end_date       String?                   
   status         String   @db.VarChar(50)               
   project_image  String?  @db.VarChar(255)
   created_at     DateTime @default(now())               
-  created_by     String                                      
-  updated_at     DateTime @updatedAt                    
-  updated_by     String                                 
+  created_by     String?                                      
+  updated_at     DateTime? @updatedAt                    
+  updated_by     String?                              
 }
 
+// UserModel
+model user {
+  user_id       String   @id @default(uuid()) @db.Uuid
+  project_id    String?  @db.Uuid
+  role_id       String  @db.Uuid
+  username      String   @db.VarChar(255)
+  password_hash String   @db.VarChar(255)
+  created_at    DateTime @default(now())
+  created_by    String?
+  updated_at    DateTime @updatedAt
+  updated_by    String?
+
+  // project project @relation(fields: [project_id], references: [project_id])
+  // role    role    @relation(fields: [role_id], references: [role_id])
+}
 
 // User Model

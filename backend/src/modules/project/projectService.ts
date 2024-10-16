@@ -2,7 +2,6 @@ import { StatusCodes } from "http-status-codes";
 import { ResponseStatus, ServiceResponse } from "@common/models/serviceResponse";
 import { ProjectRepository } from "@modules/project/projectRepository";
 import { TypePayloadProject } from "@modules/project/projectModel";
-
 import { project } from "@prisma/client";
 
 
