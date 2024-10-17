@@ -21,23 +21,27 @@ CREATE TABLE "product" (
 );
 
 -- CreateTable
-CREATE TABLE "project"(
-    "project_id" UUID NOT NULL,  -- แก้ไขชื่อคอลัมน์
+CREATE TABLE "project" (
+    "project_id" UUID NOT NULL,
     "project_name" TEXT NOT NULL,
-    "budget" DOUBLE PRECISION NOT NULL,  -- แก้ไขสะกด
-    "start_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "end_date" TIMESTAMP(3),
-    "status" TEXT,  -- เพิ่มคอลัมน์ "status"
+    "budget" DECIMAL(15,2),
+    "start_date" TEXT NOT NULL,
+    "end_date" TEXT,
+    "status" VARCHAR(50) NOT NULL,
+    "project_image" VARCHAR(255),
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "created_by" TEXT NOT NULL,
+    "created_by" TEXT,
     "updated_at" TIMESTAMP(3),
-    "updated_by" TEXT NOT NULL,  -- แก้ไขจาก "update__by"
+    "updated_by" TEXT,
 
-    CONSTRAINT "project_pkey" PRIMARY KEY ("project_id")  -- แก้ไขคอลัมน์ที่เป็น Primary Key
+    CONSTRAINT "project_pkey" PRIMARY KEY ("project_id")
 );
 
 -- CreateIndex
 CREATE UNIQUE INDEX "categories_category_name_key" ON "categories"("category_name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "project_project_name_key" ON "project"("project_name");
 
 -- AddForeignKey
 ALTER TABLE "product" ADD CONSTRAINT "product_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

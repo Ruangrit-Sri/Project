@@ -3,6 +3,7 @@ import { ResponseStatus, ServiceResponse } from "@common/models/serviceResponse"
 import { UserRepository } from "@modules/user/userRepository";
 import { TypePayloadUser } from "@modules/user/userModel";
 import { user } from "@prisma/client";
+import bcrypt from "bcrypt"; 
 
 export const userService = {
     // อ่านข้อมูลผู้ใช้ทั้งหมด
@@ -23,20 +24,25 @@ export const userService = {
             if (checkUser) {
                 return new ServiceResponse(
                     ResponseStatus.Failed,
-                    "Username already taken",
+                    "Username นี้ถูกใช้แล้ว",
                     null,
                     StatusCodes.BAD_REQUEST
                 );
             }
-            const user = await UserRepository.create(payload);
+            // เข้ารหัสรหัสผ่านก่อนบันทึก
+            const hashedPassword = await bcrypt.hash(payload.password, 10);
+            const user = await UserRepository.create({ 
+                ...payload, 
+                password: hashedPassword 
+            });
             return new ServiceResponse<user>(
                 ResponseStatus.Success,
-                "Create user success",
+                "สร้างผู้ใช้สำเร็จ",
                 user,
                 StatusCodes.OK
             );
         } catch (ex) {
-            const errorMessage = "Error create user: " + (ex as Error).message;
+            const errorMessage = "เกิดข้อผิดพลาดในการสร้างผู้ใช้: " + (ex as Error).message;
             return new ServiceResponse(
                 ResponseStatus.Failed,
                 errorMessage,

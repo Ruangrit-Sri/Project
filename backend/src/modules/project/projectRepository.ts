@@ -1,77 +1,81 @@
 import prisma from "@src/db"; 
-import { user } from "@prisma/client";  // ชื่อที่ตรงกับ schema ของ Prisma
-import { TypePayloadUser } from "@modules/user/userModel";
+import { project } from "@prisma/client";  // เปลี่ยนชื่อให้ตรงกับ schema
+import { TypePayloadProject } from "@modules/project/projectModel";
 
-export const UserKeys = [
-    "user_id",
+export const Keys = [
     "project_id",
-    "role_id",
-    "username",
-    "password_hash",
+    "project_name",
+    "budget",
+    "start_date",
+    "end_date",
+    "status",
     "created_at",
     "created_by",
     "updated_at",
     "updated_by"
-];
+]
 
-export const UserRepository = {
-    // ค้นหาผู้ใช้ทั้งหมด
+
+export const ProjectRepository = {
+    // ค้นหาโปรเจกต์ทั้งหมด
     findAllAsync: async () => {
-        return prisma.user.findMany({
+        return prisma.project.findMany({
             select: {
-                user_id: true,
                 project_id: true,
-                role_id: true,
-                username: true,
-                password_hash: true,
-                created_at: true,
-                created_by: true,
-                updated_at: true,
-                updated_by: true
+                project_name: true,
+                budget: true,  
+                start_date: true,
+                end_date: true,
+                status: true,
+                // created_at: true,
+                // created_by: true,
+                // updated_at: true,
+                // updated_by: true
             }
         });
     },
 
-    // ค้นหาผู้ใช้ตาม username
-    findByUsername: async <Key extends keyof user>(
-        username: string,
-        keys = UserKeys as Key[]
+    // ค้นหาโปรเจกต์ตามชื่อ
+    findByName: async <Key extends keyof project>(
+        project_name: string,
+        keys = Keys as Key[]
     ) => {
-        return prisma.user.findFirst({
-            where: { username: username },
+        return prisma.project.findUnique({
+            where: { project_name: project_name },
             select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {}),
-        }) as Promise<Pick<user, Key> | null>;
+        }) as Promise<Pick<project, Key> | null>;
     },
 
-    // สร้างผู้ใช้ใหม่
-    create: async (payload: TypePayloadUser) => {
-        const username = payload.username.trim();
+    // สร้างโปรเจกต์ใหม่
+    create: async (payload: TypePayloadProject) => {
+        const project_name = payload.project_name.trim();
+        const startDate = payload.start_date;
         const setPayload: any = {
-            project_id: payload.project_id,
-            role_id: payload.role_id,
-            username: username,
-            password_hash: payload.password_hash,
-            created_by: payload.created_by,
-            updated_by: payload.updated_by,
-        };
+            project_name: project_name,
+            budget: payload.budget,
+            start_date: startDate,
+            end_date: payload.end_date,
+            status: payload.status,
+            project_image: payload.project_image
+        }
 
-        return await prisma.user.create({
+        return await prisma.project.create({
             data: setPayload
         });
     },
 
-    // อัปเดตข้อมูลผู้ใช้
-    update: async (user_id: string, payload: Partial<TypePayloadUser>) => {
-        return await prisma.user.update({
-            where: { user_id: user_id },
+    // อัปเดตโปรเจกต์
+    update: async (project_id: string, payload: Partial<TypePayloadProject>) => {
+        return await prisma.project.update({
+            where: { project_id: project_id },
             data: payload
         });
     },
 
-    // ลบผู้ใช้
-    delete: async (user_id: string) => {
-        return await prisma.user.delete({
-            where: { user_id: user_id }
+    // ลบโปรเจกต์
+    delete: async (project_id: string) => {
+        return await prisma.project.delete({
+            where: { project_id: project_id }
         });
     }
-};
+}

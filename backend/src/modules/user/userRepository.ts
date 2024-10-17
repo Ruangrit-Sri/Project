@@ -51,8 +51,7 @@ export const UserRepository = {
             role_id: payload.role_id,
             username: username,
             password_hash: payload.password_hash,
-            created_by: payload.created_by,
-            updated_by: payload.updated_by,
+
         };
 
         return await prisma.user.create({
