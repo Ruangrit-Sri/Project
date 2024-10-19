@@ -2,19 +2,19 @@ import { z } from "zod";
 
 // ประเภทข้อมูลสำหรับ payload ของ User
 export type TypePayloadUser = {
-    project_id?: string;    // UUID, optional
-    role_id?: string;        // UUID
-    username: string;
-    password: string;
-    // created_by?: string;    // UUID, optional
-    // updated_by?: string;    // UUID, optional
+    project_id?: string; // UUID, optional
+    role_id?: string;    // UUID, required
+    username: string;    // ชื่อผู้ใช้ที่ต้องการ
+    password: string;    // รหัสผ่าน
+    // created_by?: string; // UUID, optional
+    // updated_by?: string; // UUID, optional
 };
 
 // Schema สำหรับการสร้าง User ใหม่
 export const CreateUserSchema = z.object({
     body: z.object({
-        project_id: z.string().uuid().optional(),
-        role_id: z.string().uuid(),
+        // project_id: z.string().uuid().optional(),
+        // role_id: z.string().uuid().required(), // ถ้าต้องการให้เป็น required ก็สามารถปลดคอมเมนต์ได้
         username: z.string().max(255),
         password: z.string().max(255),
         // created_by: z.string().uuid().optional(),
@@ -28,15 +28,15 @@ export const UpdateUserSchema = z.object({
         user_id: z.string().uuid(), // ต้องระบุ user_id เพื่อทำการอัปเดต
         project_id: z.string().uuid().optional(),
         role_id: z.string().uuid().optional(),
-        username: z.string().max(255).optional(),
-        password: z.string().max(255).optional(),
-        updated_by: z.string().uuid().optional(),  // ต้องระบุ updated_by เพื่อบันทึกว่าใครแก้ไข
-    })
+        username: z.string().max(255).optional(), // ถ้าไม่ต้องการให้เป็น required
+        password: z.string().max(255).optional(), // ถ้ารหัสผ่านไม่ถูกส่งมา จะไม่ทำการอัปเดต
+        // updated_by: z.string().uuid().optional(), // ต้องระบุ updated_by เพื่อบันทึกว่าใครแก้ไข
+    }),
 });
 
 // Schema สำหรับการลบ User
 export const DeleteUserSchema = z.object({
-    params: z.object({
-        user_id: z.string().uuid(),  // รับ UUID สำหรับลบ
+    body: z.object({
+        user_id: z.string().uuid(),  // รับ UUID ของ user ผ่าน body
     })
 });

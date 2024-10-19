@@ -47,7 +47,7 @@ model user {
   user_id       String   @id @default(uuid()) @db.Uuid
   project_id    String?  @db.Uuid
   role_id       String?  @db.Uuid
-  username      String   @db.VarChar(255)
+  username      String   @db.VarChar(255) @unique
   password      String   @db.VarChar(255)
   created_at    DateTime @default(now())
   created_by    String?

@@ -30,11 +30,12 @@ export const projectRouter = (() => {
     });
 
     // DELETE a project
-    router.delete("/delete/:project_id", validateRequest(DeleteProjectSchema), async (req: Request, res: Response) => {
-        const project_id = req.params.project_id;
+    router.delete("/delete", validateRequest(DeleteProjectSchema), async (req: Request, res: Response) => {
+        const { project_id } = req.body; // Extract project_id from the body
         const ServiceResponse = await projectService.delete(project_id);
         handleServiceResponse(ServiceResponse, res);
     });
+
 
     return router;
 })();

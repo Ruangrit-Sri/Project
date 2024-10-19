@@ -41,9 +41,9 @@ export const UpdateProjectSchema = z.object({
     })
 });
 
-// Schema สำหรับการลบโปรเจกต์ (จริงๆ ไม่ต้องมี body เพราะใช้แค่ project_id จาก URL)
+// Schema สำหรับการลบ Project
 export const DeleteProjectSchema = z.object({
-    params: z.object({
-        project_id: z.string().uuid()
+    body: z.object({
+        project_id: z.string().uuid(),  // รับ UUID ของ project ผ่าน body
     })
 });

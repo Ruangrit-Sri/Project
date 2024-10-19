@@ -3,7 +3,7 @@ import { ResponseStatus, ServiceResponse } from "@common/models/serviceResponse"
 import { UserRepository } from "@modules/user/userRepository";
 import { TypePayloadUser } from "@modules/user/userModel";
 import { user } from "@prisma/client";
-import bcrypt from "bcrypt"; 
+import bcrypt from "bcrypt";
 
 export const userService = {
     // อ่านข้อมูลผู้ใช้ทั้งหมด
@@ -24,25 +24,25 @@ export const userService = {
             if (checkUser) {
                 return new ServiceResponse(
                     ResponseStatus.Failed,
-                    "Username นี้ถูกใช้แล้ว",
+                    "Username already taken",
                     null,
                     StatusCodes.BAD_REQUEST
                 );
             }
             // เข้ารหัสรหัสผ่านก่อนบันทึก
             const hashedPassword = await bcrypt.hash(payload.password, 10);
-            const user = await UserRepository.create({ 
-                ...payload, 
-                password: hashedPassword 
+            const newUser = await UserRepository.create({
+                ...payload,
+                password: hashedPassword
             });
             return new ServiceResponse<user>(
                 ResponseStatus.Success,
-                "สร้างผู้ใช้สำเร็จ",
-                user,
+                "Create user success",
+                newUser,
                 StatusCodes.OK
             );
         } catch (ex) {
-            const errorMessage = "เกิดข้อผิดพลาดในการสร้างผู้ใช้: " + (ex as Error).message;
+            const errorMessage = "Error create user: " + (ex as Error).message;
             return new ServiceResponse(
                 ResponseStatus.Failed,
                 errorMessage,
@@ -55,11 +55,27 @@ export const userService = {
     // อัปเดตข้อมูลผู้ใช้
     update: async (user_id: string, payload: Partial<TypePayloadUser>) => {
         try {
-            const user = await UserRepository.update(user_id, payload);
+            // ตรวจสอบว่าผู้ใช้มีอยู่จริง
+            const existingUser = await UserRepository.findByUserId(user_id);
+            if (!existingUser) {
+                return new ServiceResponse(
+                    ResponseStatus.Failed,
+                    "Not found user",
+                    null,
+                    StatusCodes.NOT_FOUND
+                );
+            }
+
+            // ถ้ามีการเปลี่ยนแปลงรหัสผ่าน ให้อัปเดตรหัสผ่านใหม่
+            if (payload.password) {
+                payload.password = await bcrypt.hash(payload.password, 10);
+            }
+
+            const updatedUser = await UserRepository.update(user_id, payload);
             return new ServiceResponse<user>(
                 ResponseStatus.Success,
                 "Update user success",
-                user,
+                updatedUser,
                 StatusCodes.OK
             );
         } catch (ex) {
@@ -76,6 +92,16 @@ export const userService = {
     // ลบผู้ใช้
     delete: async (user_id: string) => {
         try {
+            const existingUser = await UserRepository.findByUserId(user_id);
+            if (!existingUser) {
+                return new ServiceResponse(
+                    ResponseStatus.Failed,
+                    "Not found user",
+                    null,
+                    StatusCodes.NOT_FOUND
+                );
+            }
+
             await UserRepository.delete(user_id);
             return new ServiceResponse(
                 ResponseStatus.Success,
