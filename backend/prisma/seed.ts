@@ -17,16 +17,14 @@ async function main() {
 
     // กำหนดรหัสผ่านที่ต้องการตั้งตรงๆ
     const password = "rootadmin";  // กำหนดรหัสผ่านตรงนี้
-
     // เข้ารหัสรหัสผ่านที่กำหนด
     const hashedPassword = await bcrypt.hash(password, 10);
-
     // สร้างผู้ใช้ใหม่
     const newUser = await prisma.user.create({
       data: {
         username: "rootadmin",
         password: hashedPassword,
-        role_id: "admin-role-id",  // ปรับ role_id ตามความเหมาะสม
+        role_id: "root-admin",  // ปรับ role_id ตามความเหมาะสม
         project_id: null,          // ถ้าจำเป็นสามารถตั้งค่าเป็น UUID ของ project
       },
     });
@@ -39,11 +37,12 @@ async function main() {
 }
 
 // เรียกใช้ฟังก์ชัน main
-main()
-  .catch((e) => {
-    console.error("Error detected in main:", e);
-    process.exit(1);
+  main()
+  .then(async () => {
+    await prisma.$disconnect()
   })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+  .catch(async (e) => {
+    console.error("Errror detected in main:", e);
+    await prisma.$disconnect()
+    process.exit(1)
+  })
