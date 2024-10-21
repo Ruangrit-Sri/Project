@@ -39,7 +39,8 @@ model project {
   created_at     DateTime @default(now())               
   created_by     String?                                      
   updated_at     DateTime? @updatedAt                    
-  updated_by     String?                              
+  updated_by     String?                  
+ 
 }
 
 // User Model
@@ -54,8 +55,70 @@ model user {
   updated_at    DateTime @updatedAt
   updated_by    String?
 
-  // project project @relation(fields: [project_id], references: [project_id])
-  // role    role    @relation(fields: [role_id], references: [role_id])
 }
 
-// Roles Model
+// Role Model
+model role {
+  role_id       String     @id @default(uuid()) @db.Uuid
+  role_name     String     @unique @db.VarChar(50)
+  created_at    DateTime   @default(now())
+  created_by    String?
+  updated_at    DateTime?  @updatedAt
+  updated_by    String?
+}
+
+// Permissions Model
+model permission {
+  permission_id   String     @id @default(uuid()) @db.Uuid
+  permission_name String     @db.VarChar(255)
+}
+
+// RolePermissions Model
+model rolePermission {
+  role_permission_id String     @id @default(uuid()) @db.Uuid
+  role_id            String     @db.Uuid
+  permission_id      String     @db.Uuid
+
+}
+
+// Task Model
+model task {
+  task_id         String     @id @default(uuid()) @db.Uuid
+  task_name       String     @db.VarChar(255)
+  description     String?
+  budget          Decimal    @db.Decimal(15, 2)
+  start_date      String
+  end_date        String?
+  status          String     @db.VarChar(50)
+  created_at      DateTime   @default(now())
+  created_by      String?
+  updated_at      DateTime?  @updatedAt
+  updated_by      String?
+}
+
+// Plan Model
+model plan {
+  plan_id       String     @id @default(uuid()) @db.Uuid
+  description   String?
+  progress_task Int
+  created_at    DateTime   @default(now())
+  created_by    String?
+  updated_at    DateTime?  @updatedAt
+  updated_by    String?
+
+}
+
+// Resource Model
+model resource {
+  resource_id   String     @id @default(uuid()) @db.Uuid
+  cost          Decimal    @default(0.00) @db.Decimal(15, 2)
+  total         Decimal    @default(0.00) @db.Decimal(15, 2)
+  resource_name String     @db.VarChar(255)
+  resource_type String     @db.VarChar(255)
+  quantity      Int        @default(0)
+  created_at    DateTime   @default(now())
+  created_by    String?
+  updated_at    DateTime?  @updatedAt
+  updated_by    String?
+
+}

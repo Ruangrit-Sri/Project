@@ -9,6 +9,7 @@ import errorHandler from "@common/middleware/errorHandler";
 import { categoryRouter } from "@modules/categories/categoryRouter";
 import { projectRouter } from "@modules/project/projectRouter";
 import { userRouter } from "@modules/user/userRouter";
+import { taskRouter } from "@modules/task/taskRouter";
 
 const logger = pino({ name: "server start" });
 const app = express();
@@ -24,11 +25,8 @@ app.use(helmet());
 app.use("/v1/category", categoryRouter);
 app.use("/v1/project",projectRouter);
 app.use("/v1/user",userRouter);
+app.use("/v1/task",taskRouter);
 
-// test
-app.use("/test", (req: Request, res: Response) => {
-  return res.json("Hello world!");
-});
 
 // Error handlers
 app.use(errorHandler());

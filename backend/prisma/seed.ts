@@ -1,48 +1,33 @@
-import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcrypt';  // ใช้สำหรับเข้ารหัสรหัสผ่าน
+import { PrismaClient } from '@prisma/client'
+import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  try {
-    // ตรวจสอบว่ามีผู้ใช้ rootadmin อยู่แล้วหรือไม่
-    const existingUser = await prisma.user.findUnique({
-      where: { username: "rootadmin" },
-    });
+  // เข้ารหัสรหัสผ่าน rootadmin
+  const hashedPassword = await bcrypt.hash('admin123', 10);
 
-    if (existingUser) {
-      console.log("ผู้ใช้ rootadmin มีอยู่แล้ว");
-      return;
-    }
+  // สร้างหรืออัปเดตผู้ใช้ rootadmin
+  const rootAdmin = await prisma.user.upsert({
+    where: { username: 'rootadmin' },  // ค้นหาจาก username
+    update: {},  // ถ้าพบจะไม่อัปเดตข้อมูลเพิ่มเติม
+    create: {
+      username: 'rootadmin',
+      password: hashedPassword,  // รหัสผ่านที่เข้ารหัส
+      role_id: 'role-admin-id',  // อัปเดต role_id ให้ตรงกับ schema ของคุณ
+      // สามารถเพิ่มฟิลด์อื่นๆ ตาม schema ของตาราง user
+    },
+  });
 
-    // กำหนดรหัสผ่านที่ต้องการตั้งตรงๆ
-    const password = "rootadmin";  // กำหนดรหัสผ่านตรงนี้
-    // เข้ารหัสรหัสผ่านที่กำหนด
-    const hashedPassword = await bcrypt.hash(password, 10);
-    // สร้างผู้ใช้ใหม่
-    const newUser = await prisma.user.create({
-      data: {
-        username: "rootadmin",
-        password: hashedPassword,
-        role_id: "root-admin",  // ปรับ role_id ตามความเหมาะสม
-        project_id: null,          // ถ้าจำเป็นสามารถตั้งค่าเป็น UUID ของ project
-      },
-    });
-
-    console.log("สร้างผู้ใช้ rootadmin สำเร็จ:", newUser);
-  } catch (error) {
-    console.error("เกิดข้อผิดพลาดใน main: ", error);
-    throw error;
-  }
+  console.log({ rootAdmin });
 }
 
-// เรียกใช้ฟังก์ชัน main
-  main()
+main()
   .then(async () => {
-    await prisma.$disconnect()
+    await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error("Errror detected in main:", e);
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });
