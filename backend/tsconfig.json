@@ -18,9 +18,9 @@
     "noPropertyAccessFromIndexSignature": false,
     "skipLibCheck": true,
     "ignoreDeprecations": "5.0",
-    "types": ["node"]  // เพิ่มส่วนนี้เข้าไป
+    "resolveJsonModule": true,
+    "types": ["node"]
   },
-  "extends": [],
   "exclude": ["node_modules"],
-  "include": ["src/**/*.ts", "tests/**/*.ts"]
+  "include": ["src/**/*.ts", "prisma/**/*.ts", "tests/**/*.ts"]
 }

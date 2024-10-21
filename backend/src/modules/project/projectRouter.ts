@@ -2,7 +2,6 @@ import express, {Request, Response} from "express";
 import { handleServiceResponse, validateRequest } from "@common/utils/httpHandlers";
 import { projectService } from "@modules/project/projectService";
 import { CreateProjectSchema } from "@modules/project/projectModel";
-
 import { UpdateProjectSchema, DeleteProjectSchema } from "@modules/project/projectModel";
 
 export const projectRouter = (() => {

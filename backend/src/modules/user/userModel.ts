@@ -14,7 +14,7 @@ export type TypePayloadUser = {
 export const CreateUserSchema = z.object({
     body: z.object({
         // project_id: z.string().uuid().optional(),
-        // role_id: z.string().uuid().required(), // ถ้าต้องการให้เป็น required ก็สามารถปลดคอมเมนต์ได้
+        role_id: z.string().max(255),
         username: z.string().max(255),
         password: z.string().max(255),
         // created_by: z.string().uuid().optional(),
