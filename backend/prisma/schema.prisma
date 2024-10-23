@@ -34,7 +34,7 @@ model project {
   budget         Decimal? @db.Decimal(15, 2)           
   start_date     String                    
   end_date       String?                   
-  status         String   @db.VarChar(50)               
+  status         Boolean                
   project_image  String?  @db.VarChar(255)
   created_at     DateTime @default(now())               
   created_by     String?                                      
@@ -47,8 +47,8 @@ model project {
 // User Model
 model user {
   user_id       String   @id @default(uuid()) @db.Uuid
-  project_id    String   @db.Uuid
-  role_id       String?  @db.VarChar(255)
+  project_id    String?  @db.Uuid
+  role_id       String   @db.VarChar(255)
   username      String   @db.VarChar(255) @unique
   password      String   @db.VarChar(255)
   created_at    DateTime @default(now())
@@ -56,17 +56,7 @@ model user {
   updated_at    DateTime @updatedAt
   updated_by    String?
   
-  projects      project @relation(fields: [project_id], references: [project_id])
-}
-
-// Role Model
-model role {
-  role_id       String     @id @default(uuid()) @db.Uuid
-  role_name     String     @unique @db.VarChar(50)
-  created_at    DateTime   @default(now())
-  created_by    String?
-  updated_at    DateTime?  @updatedAt
-  updated_by    String?
+  projects      project? @relation(fields: [project_id], references: [project_id])
 }
 
 // Permissions Model
@@ -75,13 +65,7 @@ model permission {
   permission_name String     @db.VarChar(255)
 }
 
-// RolePermissions Model
-model rolePermission {
-  role_permission_id String     @id @default(uuid()) @db.Uuid
-  role_id            String     @db.Uuid
-  permission_id      String     @db.Uuid
 
-}
 
 // Task Model
 model task {
@@ -91,7 +75,7 @@ model task {
   budget          Decimal    @db.Decimal(15, 2)
   start_date      String
   end_date        String?
-  status          String     @db.VarChar(50)
+  status          Boolean     
   created_at      DateTime   @default(now())
   created_by      String?
   updated_at      DateTime?  @updatedAt

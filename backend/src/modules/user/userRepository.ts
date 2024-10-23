@@ -42,7 +42,7 @@ export const UserRepository = {
 
     // ค้นหาผู้ใช้ตาม user_id
     findByUserId: async (user_id: string) => {
-        return prisma.user.findUnique({
+        return prisma.user.findFirst({
             where: { user_id: user_id },
         });
     },

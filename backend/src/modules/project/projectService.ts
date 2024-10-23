@@ -14,7 +14,7 @@ export const projectService = {
             "Get All success",
             project,
             StatusCodes.OK
-        )
+        );
     },
 
     // สร้างโปรเจกต์ใหม่
@@ -50,11 +50,35 @@ export const projectService = {
     // อัปเดตโปรเจกต์
     update: async (project_id: string, payload: Partial<TypePayloadProject>) => {
         try {
-            const project = await ProjectRepository.update(project_id, payload);
+            // ตรวจสอบว่าโปรเจกต์มีอยู่จริง
+            const existingProject = await ProjectRepository.findById(project_id);
+            if (!existingProject) {
+                return new ServiceResponse(
+                    ResponseStatus.Failed,
+                    "Not found project",
+                    null,
+                    StatusCodes.NOT_FOUND
+                );
+            }
+
+            // ตรวจสอบว่าชื่อโปรเจกต์ซ้ำหรือไม่
+            if (payload.project_name) {
+                const checkProject = await ProjectRepository.findByName(payload.project_name);
+                if (checkProject && checkProject.project_id !== project_id) {
+                    return new ServiceResponse(
+                        ResponseStatus.Failed,
+                        "Project name already taken",
+                        null,
+                        StatusCodes.BAD_REQUEST
+                    );
+                }
+            }
+
+            const updatedProject = await ProjectRepository.update(project_id, payload);
             return new ServiceResponse<project>(
                 ResponseStatus.Success,
                 "Update project success",
-                project,
+                updatedProject,
                 StatusCodes.OK
             );
         } catch (ex) {
@@ -71,6 +95,17 @@ export const projectService = {
     // ลบโปรเจกต์
     delete: async (project_id: string) => {
         try {
+            // ตรวจสอบว่าโปรเจกต์มีอยู่จริง
+            const existingProject = await ProjectRepository.findById(project_id);
+            if (!existingProject) {
+                return new ServiceResponse(
+                    ResponseStatus.Failed,
+                    "Not found project",
+                    null,
+                    StatusCodes.NOT_FOUND
+                );
+            }
+
             await ProjectRepository.delete(project_id);
             return new ServiceResponse(
                 ResponseStatus.Success,
@@ -89,3 +124,4 @@ export const projectService = {
         }
     }
 }
+

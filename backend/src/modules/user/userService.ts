@@ -66,11 +66,25 @@ export const userService = {
                 );
             }
 
+            // ตรวจสอบว่าชื่อผู้ใช้ใหม่ถูกใช้งานแล้วหรือยัง (ตรวจสอบเฉพาะถ้ามีการส่ง username ใหม่มา)
+            if (payload.username) {
+                const checkUser = await UserRepository.findByUsername(payload.username);
+                if (checkUser && checkUser.user_id !== user_id) {  // ตรวจสอบว่าไม่ใช่ user เดียวกัน
+                    return new ServiceResponse(
+                        ResponseStatus.Failed,
+                        "Username already taken",
+                        null,
+                        StatusCodes.BAD_REQUEST
+                    );
+                }
+            }
+
             // ถ้ามีการเปลี่ยนแปลงรหัสผ่าน ให้อัปเดตรหัสผ่านใหม่
             if (payload.password) {
                 payload.password = await bcrypt.hash(payload.password, 10);
             }
 
+            // อัปเดตข้อมูลผู้ใช้
             const updatedUser = await UserRepository.update(user_id, payload);
             return new ServiceResponse<user>(
                 ResponseStatus.Success,
@@ -89,6 +103,7 @@ export const userService = {
         }
     },
 
+
     // ลบผู้ใช้
     delete: async (user_id: string) => {
         try {
@@ -103,10 +118,10 @@ export const userService = {
             }
 
             await UserRepository.delete(user_id);
-            return new ServiceResponse(
+            return new ServiceResponse<string>(
                 ResponseStatus.Success,
+                "User found",
                 "Delete user success",
-                null,
                 StatusCodes.OK
             );
         } catch (ex) {

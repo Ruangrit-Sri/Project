@@ -35,6 +35,26 @@ export const ProjectRepository = {
         });
     },
 
+    // ค้นหาโปรเจกต์ตาม project_id
+    findById: async (project_id: string) => {
+        return prisma.project.findUnique({
+            where: { project_id: project_id },
+            select: {
+                project_id: true,
+                project_name: true,
+                budget: true,
+                start_date: true,
+                end_date: true,
+                status: true,
+                project_image: true,
+                created_at: true,
+                created_by: true,
+                updated_at: true,
+                updated_by: true
+            }
+        });
+    },
+
     // ค้นหาโปรเจกต์ตามชื่อ
     findByName: async <Key extends keyof project>(
         project_name: string,
