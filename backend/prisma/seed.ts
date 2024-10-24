@@ -14,7 +14,7 @@ async function main() {
     create: {
       username: 'rootadmin',
       password: 'admin123',  // รหัสผ่านที่เข้ารหัส
-      role_id : 'adminid',  // อัปเดต role_id ให้ตรงกับ schema ของคุณ
+      role : 'adminid',  // อัปเดต role_id ให้ตรงกับ schema ของคุณ
       // สามารถเพิ่มฟิลด์อื่นๆ ตาม schema ของตาราง user
     },
   });
