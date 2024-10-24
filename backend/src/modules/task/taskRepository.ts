@@ -37,6 +37,14 @@ export const TaskRepository = {
     });
   },
 
+  // Find task by ID
+  findById: async (task_id: string) => {
+    return prisma.task.findUnique({
+        where: { task_id },
+    });
+  },
+
+
   // Find task by name (or any other unique key)
   findByName: async <Key extends keyof task>(
     task_name: string,

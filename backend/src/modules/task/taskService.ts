@@ -49,11 +49,23 @@ export const taskService = {
     // อัปเดต task
     update: async (task_id: string, payload: Partial<TypePayloadTask>) => {
         try {
-            const task = await TaskRepository.update(task_id, payload);
+            // ตรวจสอบว่า Task มีอยู่หรือไม่
+            const existingTask = await TaskRepository.findById(task_id); // ต้องเพิ่ม findById ใน TaskRepository
+            if (!existingTask) {
+                return new ServiceResponse(
+                    ResponseStatus.Failed,
+                    "Not found task",
+                    null,
+                    StatusCodes.NOT_FOUND
+                );
+            }
+
+            // ถ้า Task มีอยู่ ทำการอัปเดต
+            const updatedTask = await TaskRepository.update(task_id, payload);
             return new ServiceResponse<task>(
                 ResponseStatus.Success,
                 "Update task success",
-                task,
+                updatedTask,
                 StatusCodes.OK
             );
         } catch (ex) {
@@ -70,13 +82,24 @@ export const taskService = {
     // ลบ task
     delete: async (task_id: string) => {
         try {
+            // ตรวจสอบว่า Task มีอยู่หรือไม่
+            const existingTask = await TaskRepository.findById(task_id); // ต้องเพิ่ม findById ใน TaskRepository
+            if (!existingTask) {
+                return new ServiceResponse(
+                    ResponseStatus.Failed,
+                    "Not found task",
+                    null,
+                    StatusCodes.NOT_FOUND
+                );
+            }
+            
             await TaskRepository.delete(task_id);
             return new ServiceResponse(
                 ResponseStatus.Success,
                 "Delete task success",
                 null,
                 StatusCodes.OK
-            );
+            );    
         } catch (ex) {
             const errorMessage = "Error deleting task: " + (ex as Error).message;
             return new ServiceResponse(
@@ -87,4 +110,5 @@ export const taskService = {
             );
         }
     }
+
 };

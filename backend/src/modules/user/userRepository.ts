@@ -5,7 +5,7 @@ import { TypePayloadUser } from "@modules/user/userModel";
 export const UserKeys = [
     "user_id",
     "project_id",
-    "role_id",
+    "role",
     "username",
     "password",
     "created_at",
@@ -19,11 +19,10 @@ export const UserRepository = {
     findAllAsync: async () => {
         return prisma.user.findMany({
             select: {
+                project_id : true,
                 user_id: true,
-                project_id: true,
-                role_id: true,
                 username: true,
-                password: true,
+                role: true,
                 created_at: true,
                 created_by: true,
                 updated_at: true,
@@ -34,31 +33,61 @@ export const UserRepository = {
 
     // ค้นหาผู้ใช้ตามชื่อผู้ใช้
     findByUsername: async (username: string, keys = UserKeys as Array<keyof user>) => {
-        return prisma.user.findFirst({
+        return prisma.user.findUnique({
             where: { username: username },
             select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {}),
         }) as Promise<Pick<user, keyof user> | null>;
     },
 
     // ค้นหาผู้ใช้ตาม user_id
-    findByUserId: async (user_id: string) => {
-        return prisma.user.findFirst({
+    findById: async (user_id: string) => {
+        return prisma.user.findUnique({
             where: { user_id: user_id },
+            select: {
+                user_id: true,
+                username: true,
+                role: true,
+                created_at: true,
+                created_by: true,
+                updated_at: true,
+                updated_by: true
+            }
         });
     },
+
+    
 
     // สร้างผู้ใช้ใหม่
     create: async (payload: TypePayloadUser) => {
+        const username = payload.username.trim();
+        const setPayload: any = {
+            username: username,
+            password: payload.password,
+            role: payload.role,
+            // created_by: payload.created_by,
+            // updated_by: payload.updated_by
+        };
+
         return await prisma.user.create({
-            data: payload
+            data: setPayload
         });
     },
 
-    // อัปเดตผู้ใช้
     update: async (user_id: string, payload: Partial<TypePayloadUser>) => {
         return await prisma.user.update({
-            where: { user_id: user_id },
-            data: payload
+            where: {
+                user_id: user_id,  // ใช้ user_id ในการอัปเดต
+            },
+            data: {
+                username: payload.username,
+                password: payload.password,
+                role: payload.role,
+                // ตรวจสอบว่ามี projects หรือไม่ และทำการอัปเดตตามความสัมพันธ์
+                projects: payload.project_id ? {
+                    connect: { project_id: payload.project_id }  // ใช้การเชื่อมโยงโปรเจกต์
+                } : undefined,
+                // updated_by: payload.updated_by,  // อัปเดตฟิลด์อื่นๆ ตาม payload
+            },
         });
     },
 

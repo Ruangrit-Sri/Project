@@ -55,7 +55,7 @@ export const ResourceRepository = {
 
     // ค้นหาทรัพยากรตามชื่อ
     findByName: async (resource_name: string) => {
-        return prisma.resource.findUnique({
+        return prisma.resource.findFirst({
             where: { resource_name: resource_name },
         });
     },

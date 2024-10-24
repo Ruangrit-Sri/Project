@@ -2,6 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import { ResponseStatus, ServiceResponse } from "@common/models/serviceResponse";
 import { UserRepository } from "@modules/user/userRepository";
 import { TypePayloadUser } from "@modules/user/userModel";
+import { ProjectRepository } from "@modules/project/projectRepository";
 import { user } from "@prisma/client";
 import bcrypt from "bcrypt";
 
@@ -52,11 +53,10 @@ export const userService = {
         }
     },
 
-    // อัปเดตข้อมูลผู้ใช้
     update: async (user_id: string, payload: Partial<TypePayloadUser>) => {
         try {
             // ตรวจสอบว่าผู้ใช้มีอยู่จริง
-            const existingUser = await UserRepository.findByUserId(user_id);
+            const existingUser = await UserRepository.findById(user_id);
             if (!existingUser) {
                 return new ServiceResponse(
                     ResponseStatus.Failed,
@@ -64,6 +64,19 @@ export const userService = {
                     null,
                     StatusCodes.NOT_FOUND
                 );
+            }
+
+            // ถ้ามีการส่ง project_id ใหม่มาตรวจสอบว่าโปรเจกต์มีอยู่จริง
+            if (payload.project_id) {
+                const existingProject = await ProjectRepository.findById(payload.project_id);
+                if (!existingProject) {
+                    return new ServiceResponse(
+                        ResponseStatus.Failed,
+                        "Not found project",
+                        null,
+                        StatusCodes.NOT_FOUND
+                    );
+                }
             }
 
             // ตรวจสอบว่าชื่อผู้ใช้ใหม่ถูกใช้งานแล้วหรือยัง (ตรวจสอบเฉพาะถ้ามีการส่ง username ใหม่มา)
@@ -103,11 +116,10 @@ export const userService = {
         }
     },
 
-
     // ลบผู้ใช้
     delete: async (user_id: string) => {
         try {
-            const existingUser = await UserRepository.findByUserId(user_id);
+            const existingUser = await UserRepository.findById(user_id);
             if (!existingUser) {
                 return new ServiceResponse(
                     ResponseStatus.Failed,
