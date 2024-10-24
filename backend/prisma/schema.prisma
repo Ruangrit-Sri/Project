@@ -91,7 +91,6 @@ model plan {
   created_by    String?
   updated_at    DateTime?  @updatedAt
   updated_by    String?
-
 }
 
 // Resource Model
