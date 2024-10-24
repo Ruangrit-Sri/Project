@@ -7,7 +7,7 @@ export type TypePayloadTask = {
   budget?: number;
   start_date?: string;
   end_date?: string;
-  status?: string;
+  status: boolean;
   // created_at?: string;
   // created_by?: string;
   // updated_at?: string;
@@ -22,7 +22,7 @@ export const CreateTaskSchema = z.object({
     budget: z.number(),
     start_date: z.string().optional(),
     end_date: z.string().optional(),
-    status: z.string().optional(),
+    status: z.boolean().optional(),
     // created_at: z.string().optional(),
     // created_by: z.string().optional(),
     // updated_at: z.string().optional(),
@@ -39,7 +39,7 @@ export const UpdateTaskSchema = z.object({
     budget: z.number().optional(),
     start_date: z.string().optional(),
     end_date: z.string().optional(),
-    status: z.string().optional(),
+    status: z.boolean().optional(),
     //updated_at: z.string().optional(),
     //updated_by: z.string().optional(), // ต้องมี updated_by เพื่อบันทึกว่าใครแก้ไข
   }),
