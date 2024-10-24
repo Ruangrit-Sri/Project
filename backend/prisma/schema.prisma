@@ -70,7 +70,7 @@ model permission {
 // Task Model
 model task {
   task_id         String     @id @default(uuid()) @db.Uuid
-  task_name       String     @db.VarChar(255)
+  task_name       String     @db.VarChar(255) @unique
   description     String?
   budget          Decimal    @db.Decimal(15, 2)
   start_date      String
@@ -99,7 +99,7 @@ model resource {
   resource_id   String     @id @default(uuid()) @db.Uuid
   cost          Decimal    @default(0.00) @db.Decimal(15, 2)
   total         Decimal    @default(0.00) @db.Decimal(15, 2)
-  resource_name String     @db.VarChar(255)
+  resource_name String     @db.VarChar(255) @unique
   resource_type String     @db.VarChar(255)
   quantity      Int        @default(0)
   created_at    DateTime   @default(now())
