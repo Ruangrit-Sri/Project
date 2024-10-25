@@ -24,3 +24,19 @@ export const CreatePlanSchema = z.object({
     }), 
 });
 
+// Schema สำหรับการอัปเดต Plan
+export const UpdatePlanSchema = z.object({
+    body: z.object({
+      plan_id: z.string().nonempty("Plan ID is required"), // ตรวจสอบว่า plan_id ต้องไม่ว่าง
+      description: z.string().optional(), // อัปเดต description ได้ แต่ไม่บังคับ
+      progress_task: z.number().int().min(0).max(100), // จำนวนเต็มระหว่าง 0 ถึง 100 สำหรับเปอร์เซ็นต์ความคืบหน้า
+      updated_by: z.string().optional(), // อัปเดตผู้แก้ไขได้ แต่ไม่บังคับ
+    }),
+});
+
+// Schema สำหรับการลบ Plan
+export const DeletePlanSchema = z.object({
+    body: z.object({
+      plan_id: z.string().nonempty("Plan ID is required"), // ตรวจสอบว่า plan_id ต้องไม่ว่าง
+     }),
+});
