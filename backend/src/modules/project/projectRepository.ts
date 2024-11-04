@@ -1,5 +1,5 @@
 import prisma from "@src/db"; 
-import { project } from "@prisma/client";  // เปลี่ยนชื่อให้ตรงกับ schema
+import { project } from "@prisma/client";  
 import { TypePayloadProject } from "@modules/project/projectModel";
 
 export const Keys = [
