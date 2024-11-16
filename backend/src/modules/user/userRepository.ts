@@ -22,6 +22,7 @@ export const UserRepository = {
                 project_id : true,
                 user_id: true,
                 username: true,
+                password: true,
                 role: true,
                 created_at: true,
                 created_by: true,
