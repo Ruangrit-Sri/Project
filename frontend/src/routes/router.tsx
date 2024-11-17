@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Error404 from "@/components/layouts/layout.error404";
 import CategoriesPage from "@/pages/category";
 import AdminPage from "@/pages/admin";
+import AdminProjectPage from "@/pages/project";
 
 const router = createBrowserRouter([
     {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
             path: "/admin",
             element: <AdminPage/>
           },
+          {
+            path: "/adminproject",
+            element: <AdminProjectPage/>
+          }
         ],
     },
     {

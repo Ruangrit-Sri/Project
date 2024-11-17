@@ -1,4 +1,4 @@
-import {Text, Dialog, Button, Flex, TextField} from "@radix-ui/themes";
+import {Text, Dialog, Button, Flex, TextField, Select} from "@radix-ui/themes";
 import { postUser } from "@/services/user.service";
 import { useState } from "react";
 // import { userInfo } from "os";
@@ -76,6 +76,24 @@ const DialogAdd = ({getUserData} : DialogUserProps) => {
                     onChange={(event) => setPostRole(event.target.value)}
                 />
             </label>
+            <label>
+                <Text as="div" size="2" mb="1" weight="bold">
+                     Project
+                </Text>
+                {/* <TextField.Root
+                    defaultValue=""
+                    placeholder="Enter role"
+                    onChange={(event) => setPostRole(event.target.value)}
+                /> */}  
+                <Select.Root size="2" defaultValue="apple">
+                    <Select.Trigger />
+                    <Select.Content>
+                        <Select.Item value="apple">Apple</Select.Item>
+                        <Select.Item value="orange">Orange</Select.Item>
+                    </Select.Content>
+                </Select.Root>               
+            </label>
+
             </Flex>
             <Flex gap="3" mt="4" justify="end">
                 <Dialog.Close>

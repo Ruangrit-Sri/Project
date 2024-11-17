@@ -26,6 +26,7 @@ export const patchUser = async (data: PayloadUpdateUser) => {
     return response;
 }
 
+
 export const deleteUser = async (data: PayloadDeleteUser) => {
     const { data: response } = await mainApi.delete<UserResponse>(
         DELETE_USER + "/" + data.user_id

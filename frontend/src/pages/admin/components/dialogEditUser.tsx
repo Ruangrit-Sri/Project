@@ -41,7 +41,7 @@ const DialogEdit = ({getUserData ,user_id ,username, role} : DialogUserProps) =>
                 alert ("Failed to update user. Please try again.");
             });
     };
-
+    
     return (
         <Dialog.Root>
         <Dialog.Trigger>
