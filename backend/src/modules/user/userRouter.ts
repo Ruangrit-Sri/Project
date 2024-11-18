@@ -28,8 +28,8 @@ export const userRouter = (() => {
     });
 
     // DELETE a user using body
-    router.delete("/delete", validateRequest(DeleteUserSchema), async (req: Request, res: Response) => {
-        const { user_id } = req.body; // รับ user_id จาก body
+    router.delete("/delete/:user_id", validateRequest(DeleteUserSchema), async (req: Request, res: Response) => {
+        const { user_id } = req.params; // รับ user_id จาก body
         const serviceResponse = await userService.delete(user_id);
         handleServiceResponse(serviceResponse, res);
     });

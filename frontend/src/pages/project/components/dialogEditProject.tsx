@@ -6,7 +6,7 @@ type DialogProjectProps = {
     getProjectData: Function;
     project_id: string;
     project_name: string;
-    budget: string;
+    budget: number;
     status: boolean;
     start_date: string;
     end_date: string;
@@ -26,6 +26,11 @@ const DialogEdit = ({
     const [patchStatus, setPatchStatus] = useState(status);
     const [patchStartDate, setPatchStartDate] = useState(start_date);
     const [patchEndDate, setPatchEndDate] = useState(end_date);
+
+    const handleBudgetChange = (event: any) => {
+        const value = event.target.value;
+        setPatchBudget(value === "" ? 0 : Number(value)); // Handle empty input gracefully
+    };
 
     const handleUpdateProject = async () => {
         if (!patchProjectName || !patchBudget || !patchStartDate || !patchEndDate) {
@@ -92,7 +97,7 @@ const DialogEdit = ({
                             value={patchBudget}
                             placeholder="Enter new budget"
                             type="number"
-                            onChange={(event) => setPatchBudget(event.target.value)}
+                            onChange={handleBudgetChange}
                         />
                     </label>
                     <label>

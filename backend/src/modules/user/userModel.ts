@@ -35,7 +35,7 @@ export const UpdateUserSchema = z.object({
 
 // Schema สำหรับการลบ User
 export const DeleteUserSchema = z.object({
-    body: z.object({
+    params: z.object({
         user_id: z.string().uuid(),  // รับ UUID ของ user ผ่าน body
     })
 });

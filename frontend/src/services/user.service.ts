@@ -19,7 +19,7 @@ export const postUser = async (data: PayloadCreateUser) => {
 }
 
 export const patchUser = async (data: PayloadUpdateUser) => {
-    const { data: response } = await mainApi.patch<UserResponse>(
+    const { data: response } = await mainApi.put<UserResponse>(
         UPDATE_USER,
         data
     );
