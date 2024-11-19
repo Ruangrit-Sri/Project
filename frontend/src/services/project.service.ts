@@ -19,7 +19,7 @@ export const postProject = async (data: PayloadCreateProject) => {
 }
 
 export const patchProject = async (data: PayloadUpdateProject) => {
-    const { data: response } = await mainApi.patch<ProjectResponse>(
+    const { data: response } = await mainApi.put<ProjectResponse>(
         UPDATE_PROJECT,
         data
     );

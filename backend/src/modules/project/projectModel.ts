@@ -49,7 +49,7 @@ export const UpdateProjectSchema = z.object({
 
 // Schema สำหรับการลบ Project
 export const DeleteProjectSchema = z.object({
-    body: z.object({
+    params: z.object({
         project_id: z.string().uuid(),  // รับ UUID ของ project ผ่าน body
     })
 });

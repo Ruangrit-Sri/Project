@@ -46,7 +46,7 @@ export default function AdminProjectPage() {
                                     <Table.RowHeaderCell>{project.project_id}</Table.RowHeaderCell>
                                     <Table.Cell>{project.project_name}</Table.Cell>
                                     <Table.Cell>{project.budget}</Table.Cell>
-                                    <Table.Cell>Project Name</Table.Cell>
+                                    <Table.Cell>User Name</Table.Cell>
                                     <Table.Cell>
                                         <Flex gap="2">
                                             <DialogEdit

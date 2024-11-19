@@ -8,11 +8,15 @@ type DialogProjectProps = {
 
 const DialogAdd = ({ getProjectData }: DialogProjectProps) => {
     const [projectName, setProjectName] = useState("");
-    const [budget, setBudget] = useState("");
+    const [budget, setBudget] = useState(0);
     const [status, setStatus] = useState(false);
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
+    const handleBudgetChange = (event: any) => {
+        const value = event.target.value;
+        setBudget(value === "" ? 0 : Number(value)); // Handle empty input gracefully
+    };
     const handleCreateProject = async () => {
         if (!projectName || !budget || !startDate || !endDate) {
             alert("Please enter all required fields (project name, budget, start date, and end date).");
@@ -24,7 +28,7 @@ const DialogAdd = ({ getProjectData }: DialogProjectProps) => {
                 if (response.statusCode === 200) {
                     // Clear form fields
                     setProjectName("");
-                    setBudget("");
+                    setBudget(0);
                     setStatus(false);
                     setStartDate("");
                     setEndDate("");
@@ -68,7 +72,8 @@ const DialogAdd = ({ getProjectData }: DialogProjectProps) => {
                             defaultValue=""
                             placeholder="Enter budget"
                             type="number"
-                            onChange={(event) => setBudget(event.target.value)}
+                            value={budget}
+                            onChange={handleBudgetChange}
                         />
                     </label>
                     <label>
