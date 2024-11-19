@@ -80,11 +80,11 @@ const DialogAdd = ({getUserData} : DialogUserProps) => {
                 <Text as="div" size="2" mb="1" weight="bold">
                      Project
                 </Text>
-                {/* <TextField.Root
+                <TextField.Root
                     defaultValue=""
                     placeholder="Enter role"
                     onChange={(event) => setPostRole(event.target.value)}
-                /> */}  
+                />  
                 <Select.Root size="2" defaultValue="apple">
                     <Select.Trigger />
                     <Select.Content>
