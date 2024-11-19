@@ -60,9 +60,9 @@ model user {
 }
 
 // Permissions Model
-model permission {
-  permission_id   String     @id @default(uuid()) @db.Uuid
-  permission_name String     @db.VarChar(255)
+model role {
+  role_id   String     @id @default(uuid()) @db.Uuid
+  name String          @db.VarChar(255) @unique
 }
 
 

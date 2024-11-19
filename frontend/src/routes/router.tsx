@@ -5,6 +5,7 @@ import Error404 from "@/components/layouts/layout.error404";
 import CategoriesPage from "@/pages/category";
 import AdminPage from "@/pages/admin";
 import AdminProjectPage from "@/pages/project";
+import Login from "@/pages/login";
 
 const router = createBrowserRouter([
     {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
             element: <AdminProjectPage/>
           }
         ],
+    },
+    {
+      path: "/login",
+      element: <Login/>
     },
     {
         path: "*",

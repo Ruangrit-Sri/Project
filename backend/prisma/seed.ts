@@ -14,11 +14,23 @@ async function main() {
     create: {
       username: 'rootadmin',
       password: 'admin123',  // รหัสผ่านที่เข้ารหัส
-      role : 'adminid',  // อัปเดต role_id ให้ตรงกับ schema ของคุณ
+      role : 'rootadmin',  // อัปเดต role_id ให้ตรงกับ schema ของคุณ
       // สามารถเพิ่มฟิลด์อื่นๆ ตาม schema ของตาราง user
     },
   });
 
+  const roles = ['rootadmin', 'admin', 'CEO', 'manager', 'employee'];
+  const rolePromises = roles.map((roleName) =>
+    prisma.role.upsert({
+      where: { name: roleName },
+      update: {}, // ถ้าพบจะไม่อัปเดตข้อมูลเพิ่มเติม
+      create: { name: roleName },
+    })
+  );
+
+  const roleResults = await Promise.all(rolePromises);
+
+  console.log({ roleResults });
   console.log({ rootAdmin });
 }
 
