@@ -12,6 +12,7 @@ import { userRouter } from "@modules/user/userRouter";
 import { taskRouter } from "@modules/task/taskRouter";
 import { resourceRouter } from "@modules/resource/resourceRouter";
 import { roleRouter } from "@modules/role/roleRouter";
+import { planRouter } from "@modules/plan/planRouter";
 
 const logger = pino({ name: "server start" });
 const app = express();
@@ -30,6 +31,7 @@ app.use("/v1/user",userRouter);
 app.use("/v1/task",taskRouter);
 app.use("/v1/resource",resourceRouter);
 app.use("/v1/role",roleRouter);
+app.use("/v1/plan",planRouter);
 
 
 // Error handlers

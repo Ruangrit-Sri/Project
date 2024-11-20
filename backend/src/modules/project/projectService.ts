@@ -123,5 +123,4 @@ export const projectService = {
             );
         }
     }
-}
-
+};
