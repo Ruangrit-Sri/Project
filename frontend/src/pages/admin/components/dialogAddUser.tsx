@@ -1,9 +1,6 @@
 import {Text, Dialog, Button, Flex, TextField, Select} from "@radix-ui/themes";
 import { postUser } from "@/services/user.service";
 import { useState } from "react";
-// import { userInfo } from "os";
-// import { error } from "console";
-// import { eventNames } from "process";
 
 type DialogUserProps = {
     getUserData: Function;
@@ -70,26 +67,23 @@ const DialogAdd = ({getUserData} : DialogUserProps) => {
                 <Text as="div" size="2" mb="1" weight="bold">
                      Role
                 </Text>
-                <TextField.Root
-                    defaultValue=""
-                    placeholder="Enter role"
-                    onChange={(event) => setPostRole(event.target.value)}
-                />
+                <Select.Root size="2" defaultValue="ceo">
+                    <Select.Trigger />
+                    <Select.Content>
+                        <Select.Item value="ceo">CEO</Select.Item>
+                        <Select.Item value="admin">ADMIN</Select.Item>
+                    </Select.Content>
+                </Select.Root>               
             </label>
             <label>
                 <Text as="div" size="2" mb="1" weight="bold">
                      Project
                 </Text>
-                <TextField.Root
-                    defaultValue=""
-                    placeholder="Enter role"
-                    onChange={(event) => setPostRole(event.target.value)}
-                />  
-                <Select.Root size="2" defaultValue="apple">
+                <Select.Root size="2" defaultValue="project1">
                     <Select.Trigger />
                     <Select.Content>
-                        <Select.Item value="apple">Apple</Select.Item>
-                        <Select.Item value="orange">Orange</Select.Item>
+                        <Select.Item value="project1">PROJECT1</Select.Item>
+                        <Select.Item value="project2">PROJECT2</Select.Item>
                     </Select.Content>
                 </Select.Root>               
             </label>
@@ -112,3 +106,5 @@ const DialogAdd = ({getUserData} : DialogUserProps) => {
 
 
 export default DialogAdd
+
+  
