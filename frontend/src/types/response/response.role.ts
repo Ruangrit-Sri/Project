@@ -1,17 +1,16 @@
-export type TypeUserAll = {
+export type TypeRoleAll = {
+  role_id: string;
+  name: string;
+};
+
+export type TypeRole = {
     role_id : string;
     name : string;
-
 }
 
-export type TypeUser = {
-    role_id : string;
-    name : string;
-}
-
-export type UserResponse = {
+export type RoleResponse = {
     success: boolean;
     message: string;
-    responseObject: TypeUserAll[];
-    statusCode:number;
-};
+    responseObject: TypeRoleAll[];
+    statusCode: number;
+  };

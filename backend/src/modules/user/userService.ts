@@ -145,5 +145,7 @@ export const userService = {
                 StatusCodes.INTERNAL_SERVER_ERROR
             );
         }
-    }
+    },
+    
+
 };

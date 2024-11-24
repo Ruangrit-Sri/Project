@@ -33,6 +33,7 @@ export const userRouter = (() => {
         const serviceResponse = await userService.delete(user_id);
         handleServiceResponse(serviceResponse, res);
     });
+    
 
     return router;
 })();

@@ -82,12 +82,8 @@ export const UserRepository = {
             data: {
                 username: payload.username,
                 password: payload.password,
-                role: payload.role,
-                // ตรวจสอบว่ามี projects หรือไม่ และทำการอัปเดตตามความสัมพันธ์
-                projects: payload.project_id ? {
-                    connect: { project_id: payload.project_id }  // ใช้การเชื่อมโยงโปรเจกต์
-                } : undefined,
-                // updated_by: payload.updated_by,  // อัปเดตฟิลด์อื่นๆ ตาม payload
+                role: payload.role || "", 
+                project_id: payload.project_id
             },
         });
     },

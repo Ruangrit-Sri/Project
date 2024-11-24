@@ -1,13 +1,13 @@
-export type PayloadCreateUser = {
+export type PayloadCreateRole = {
     role_id : string;
     name : string;
 };
 
-export type PayloadUpdateUser = {
+export type PayloadUpdateRole = {
     role_id : string;
     name : string;
 }
 
-export type PayloadDeleteUser = {
+export type PayloadDeleteRole = {
     role_id : string;
 }
