@@ -52,7 +52,7 @@ const prisma = new PrismaClient();
 
 async function main() {
   // เพิ่มข้อมูล role ก่อน
-  const roles = ['rootadmin', 'admin', 'CEO', 'manager', 'employee'];
+  const roles = ['RootAdmin', 'Admin', 'CEO', 'Manager', 'Employee'];
   const rolePromises = roles.map((roleName) =>
     prisma.role.upsert({
       where: { name: roleName },
@@ -64,12 +64,12 @@ async function main() {
 
   // ค้นหา role_id ของ rootadmin
   const rootAdminRole = await prisma.role.findUnique({
-    where: { name: 'rootadmin' },
+    where: { name: 'RootAdmin' },
   });
 
   // ตรวจสอบว่าพบ role_id หรือไม่
   if (!rootAdminRole) {
-    throw new Error('Role "rootadmin" not found in database!');
+    throw new Error('Role "RootAdmin" not found in database!');
   }
 
   // เข้ารหัสรหัสผ่าน rootadmin (ถ้าจำเป็น)
@@ -77,7 +77,7 @@ async function main() {
 
   // สร้างหรืออัปเดตผู้ใช้ rootadmin
   const rootAdmin = await prisma.user.upsert({
-    where: { username: 'rootadmin' }, // ค้นหาจาก username
+    where: { username: 'RootAdmin' }, // ค้นหาจาก username
     update: {}, // ถ้าพบจะไม่อัปเดตข้อมูลเพิ่มเติม
     create: {
       username: 'rootadmin',

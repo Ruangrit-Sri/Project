@@ -123,7 +123,7 @@ const DialogAdd = ({ getUserData }: DialogUserProps) => {
   const [postRole, setPostRole] = useState("");
   const [postProject, setPostProject] = useState("");
   const [roles, setRoles] = useState<{ role_id: string; name: string }[]>([]);
-  const [projects, setProjects] = useState<{ project_id: string; name: string }[]>([]);
+  const [projects, setProjects] = useState<{ project_id: string; project_name: string }[]>([]);
   const [loadingRoles, setLoadingRoles] = useState(false);
   const [loadingProjects, setLoadingProjects] = useState(false);
 
@@ -271,13 +271,13 @@ const DialogAdd = ({ getUserData }: DialogUserProps) => {
                 onValueChange={(value) => setPostProject(value)}
               >
                 <Select.Trigger>
-                  {projects.find((project) => project.project_id === postProject)?.name ||
+                  {projects.find((project) => project.project_id === postProject)?.project_name ||
                     "Select a project"}
                 </Select.Trigger>
                 <Select.Content>
                   {projects.map((project) => (
                     <Select.Item key={project.project_id} value={project.project_id}>
-                      {project.name}
+                      {project.project_name}
                     </Select.Item>
                   ))}
                 </Select.Content>
