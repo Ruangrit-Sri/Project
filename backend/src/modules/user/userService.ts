@@ -149,3 +149,5 @@ export const userService = {
     
 
 };
+
+//ตรวจสอบฐานข้อมูล และจัดการ Logic

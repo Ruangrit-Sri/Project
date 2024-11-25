@@ -14,7 +14,8 @@ export const UserKeys = [
     "updated_by"
 ];
 
-export const UserRepository = {
+
+export const UserRepository = { //Object
     // ค้นหาผู้ใช้ทั้งหมด
     findAllAsync: async () => {
         return prisma.user.findMany({
@@ -33,7 +34,7 @@ export const UserRepository = {
     },
 
     // ค้นหาผู้ใช้ตามชื่อผู้ใช้
-    findByUsername: async (username: string, keys = UserKeys as Array<keyof user>) => {
+    findByUsername: async (username: string, keys = UserKeys as Array<keyof user>) => { //Method
         return prisma.user.findUnique({
             where: { username: username },
             select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {}),
@@ -56,7 +57,6 @@ export const UserRepository = {
         });
     },
 
-    
 
     // สร้างผู้ใช้ใหม่
     create: async (payload: TypePayloadUser) => {
@@ -65,8 +65,8 @@ export const UserRepository = {
             username: username,
             password: payload.password,
             role: payload.role,
-            // created_by: payload.created_by,
-            // updated_by: payload.updated_by
+            created_by: payload.created_by,
+            updated_by: payload.updated_by
         };
 
         return await prisma.user.create({
@@ -95,3 +95,5 @@ export const UserRepository = {
         });
     }
 };
+
+// userRepository เอาไว้จัดการ ฐานข้อมูล

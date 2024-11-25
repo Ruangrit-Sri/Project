@@ -39,3 +39,5 @@ export const DeleteUserSchema = z.object({
         user_id: z.string().uuid(),  // รับ UUID ของ user ผ่าน body
     })
 });
+
+// Model vaildate Body ตรวจสอบข้อมูลที่รับเข้ามา vaildate Schema,Body
