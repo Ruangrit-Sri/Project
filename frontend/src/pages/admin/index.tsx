@@ -13,6 +13,7 @@ export default function AdminPage() {
         getUser().then((res) => {
             console.log(res);
             setUser(res.responseObject);
+            
         });
     };
 
@@ -46,7 +47,7 @@ export default function AdminPage() {
                                     <Table.RowHeaderCell>{user.user_id}</Table.RowHeaderCell>
                                     <Table.Cell>{user.username}</Table.Cell>
                                     <Table.Cell>{user.role}</Table.Cell>
-                                    <Table.Cell>Project Name</Table.Cell>
+                                    <Table.Cell>{user.projects?.project_name} </Table.Cell>
                                     <Table.Cell>
                                         <Flex gap="2">
                                             <DialogEdit

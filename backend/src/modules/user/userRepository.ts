@@ -19,17 +19,7 @@ export const UserRepository = { //Object
     // ค้นหาผู้ใช้ทั้งหมด
     findAllAsync: async () => {
         return prisma.user.findMany({
-            select: {
-                project_id : true,
-                user_id: true,
-                username: true,
-                password: true,
-                role: true,
-                created_at: true,
-                created_by: true,
-                updated_at: true,
-                updated_by: true
-            }
+            include: {projects: true}
         });
     },
 
@@ -62,6 +52,7 @@ export const UserRepository = { //Object
     create: async (payload: TypePayloadUser) => {
         const username = payload.username.trim();
         const setPayload: any = {
+            project_id:payload.project_id,
             username: username,
             password: payload.password,
             role: payload.role,

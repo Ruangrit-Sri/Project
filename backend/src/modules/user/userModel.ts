@@ -3,6 +3,7 @@ import { z } from "zod";
 // ประเภทข้อมูลสำหรับ payload ของ User
 export type TypePayloadUser = {
     project_id?: string | null; // UUID, optional
+    project_name?: string | null; 
     role: string;    
     username: string;    // ชื่อผู้ใช้ที่ต้องการ
     password: string;    // รหัสผ่าน
@@ -13,6 +14,7 @@ export type TypePayloadUser = {
 // Schema สำหรับการสร้าง User ใหม่
 export const CreateUserSchema = z.object({
     body: z.object({
+        project_id: z.string().uuid(),
         username: z.string().max(255),
         password: z.string().max(255),
         role: z.string().max(255),

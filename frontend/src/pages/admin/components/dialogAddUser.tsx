@@ -181,7 +181,7 @@ const DialogAdd = ({ getUserData }: DialogUserProps) => {
         username: postUserName,
         password: postPassword,
         role: postRole,
-        project: postProject,
+        project_name: postProject,
       });
       if (response.statusCode === 200) {
         setPostUserName("");

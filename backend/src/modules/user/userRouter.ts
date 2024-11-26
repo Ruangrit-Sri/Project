@@ -34,11 +34,11 @@ export const userRouter = (() => {
         handleServiceResponse(serviceResponse, res);
     });
 
-    router.post("/login", validateRequest(DeleteUserSchema), async (req: Request, res: Response) => {
-        const { user_id } = req.params; // รับ user_id จาก body
-        const serviceResponse = await userService.delete(user_id);
-        handleServiceResponse(serviceResponse, res);
-    });
+    // router.post("/login", validateRequest(DeleteUserSchema), async (req: Request, res: Response) => {
+    //     const { user_id } = req.params; // รับ user_id จาก body
+    //     const serviceResponse = await userService.delete(user_id);
+    //     handleServiceResponse(serviceResponse, res);
+    // });
     
         
     return router;

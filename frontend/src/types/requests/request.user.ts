@@ -2,14 +2,14 @@ export type PayloadCreateUser = {
     username : string;
     password : string;
     role : string;
-    project: string
+    project_name: string
 };
 
 export type PayloadUpdateUser = {
     user_id : string;
     username : string;
     role : string;
-    project: string
+    project_name: string
 }
 
 export type PayloadDeleteUser = {
