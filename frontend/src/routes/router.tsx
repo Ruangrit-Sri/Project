@@ -7,8 +7,14 @@ import AdminPage from "@/pages/admin";
 import AdminProjectPage from "@/pages/project";
 import Login from "@/pages/login";
 
-const router = createBrowserRouter([
-    {
+
+const router = createBrowserRouter([  
+  {
+    path: "/login",
+    element: <Login/>
+  },
+
+  {
         path: "/",
         element: <MainLayout />,
         children: [
@@ -30,10 +36,7 @@ const router = createBrowserRouter([
           }
         ],
     },
-    {
-      path: "/login",
-      element: <Login/>
-    },
+    
     {
         path: "*",
         element: <Error404 />,
