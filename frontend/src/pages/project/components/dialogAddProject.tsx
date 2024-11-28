@@ -1,4 +1,4 @@
-import { Text, Dialog, Button, Flex, TextField, Switch } from "@radix-ui/themes";
+import { Text, Dialog, Button, Flex, TextField, Select } from "@radix-ui/themes";
 import { postProject } from "@/services/project.service";
 import { useState } from "react";
 
@@ -9,7 +9,7 @@ type DialogProjectProps = {
 const DialogAdd = ({ getProjectData }: DialogProjectProps) => {
     const [projectName, setProjectName] = useState("");
     const [budget, setBudget] = useState(0);
-    const [status, setStatus] = useState(false);
+    const [status, setStatus] = useState("In progress"); // Default status
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
@@ -17,6 +17,7 @@ const DialogAdd = ({ getProjectData }: DialogProjectProps) => {
         const value = event.target.value;
         setBudget(value === "" ? 0 : Number(value)); // Handle empty input gracefully
     };
+
     const handleCreateProject = async () => {
         if (!projectName || !budget || !startDate || !endDate) {
             alert("Please enter all required fields (project name, budget, start date, and end date).");
@@ -29,7 +30,7 @@ const DialogAdd = ({ getProjectData }: DialogProjectProps) => {
                     // Clear form fields
                     setProjectName("");
                     setBudget(0);
-                    setStatus(false);
+                    setStatus("In progress");
                     setStartDate("");
                     setEndDate("");
                     // Refresh project data
@@ -80,10 +81,19 @@ const DialogAdd = ({ getProjectData }: DialogProjectProps) => {
                         <Text as="div" size="2" mb="1" weight="bold">
                             Status
                         </Text>
-                        <Switch
-                            defaultChecked={false}
-                            onCheckedChange={(checked) => setStatus(checked)}
-                        />
+                        <Select.Root
+                            defaultValue="In progress"
+                            onValueChange={(status: string) => setStatus(status)}
+                        >
+                            <Select.Trigger className="select-trigger">
+                                {status} {/* Display the selected status */}
+                            </Select.Trigger>
+                            <Select.Content>
+                                <Select.Item value="In progress">In progress</Select.Item>
+                                <Select.Item value="Completed">Completed</Select.Item>
+                                <Select.Item value="Suspend operations">Suspend operations</Select.Item>
+                            </Select.Content>
+                        </Select.Root>
                     </label>
                     <label>
                         <Text as="div" size="2" mb="1" weight="bold">

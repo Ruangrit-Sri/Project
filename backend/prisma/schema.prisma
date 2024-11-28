@@ -43,7 +43,7 @@ model project {
   budget         Decimal?   @db.Decimal(15, 2)           
   start_date     String                    
   end_date       String?                   
-  status         Boolean                
+  status         String                
   project_image  String?    @db.VarChar(255)
   created_at     DateTime   @default(now())               
   created_by     String?    @db.Uuid                                  

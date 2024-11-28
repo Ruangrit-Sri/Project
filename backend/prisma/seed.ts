@@ -46,7 +46,7 @@
 
 
 import { PrismaClient } from '@prisma/client';
-// import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
@@ -73,7 +73,7 @@ async function main() {
   }
 
   // เข้ารหัสรหัสผ่าน rootadmin (ถ้าจำเป็น)
-  // const hashedPassword = await bcrypt.hash('admin123', 10);
+  const hashedPassword = await bcrypt.hash('admin123', 10);
 
   // สร้างหรืออัปเดตผู้ใช้ rootadmin
   const rootAdmin = await prisma.user.upsert({
@@ -81,7 +81,7 @@ async function main() {
     update: {}, // ถ้าพบจะไม่อัปเดตข้อมูลเพิ่มเติม
     create: {
       username: 'rootadmin',
-      password: 'admin123', // รหัสผ่านที่เข้ารหัส (ถ้าต้องการเข้ารหัสให้แทนที่ข้อความนี้)
+      password: hashedPassword, // รหัสผ่านที่เข้ารหัส (ถ้าต้องการเข้ารหัสให้แทนที่ข้อความนี้)
       role: rootAdminRole.name, // อ้างอิง role_id จาก role
     },
   });

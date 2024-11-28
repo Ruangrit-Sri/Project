@@ -8,6 +8,7 @@ export type PayloadCreateUser = {
 export type PayloadUpdateUser = {
     user_id : string;
     username : string;
+    password? : string;
     role : string;
     project_name: string
 }

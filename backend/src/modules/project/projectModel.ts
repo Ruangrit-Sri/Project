@@ -7,7 +7,7 @@ export type TypePayloadProject = {
     budget: number;   // อาจมี budget ในการอัปเดตด้วย
     start_date?: string;
     end_date?: string;
-    status: boolean;
+    status: string;
     project_image?: string;
     // created_at?:string;
     // created_by?: string;
@@ -22,7 +22,7 @@ export const CreateProjectSchema = z.object({
         budget: z.number().optional(),         
         start_date: z.string().optional(),
         end_date: z.string().optional(),
-        status: z.boolean().optional(),
+        status: z.string().optional(),
         project_image: z.string().optional(),
         // created_at: z.string().optional(),
         // created_by: z.string().optional(),
@@ -40,7 +40,7 @@ export const UpdateProjectSchema = z.object({
         budget: z.number().optional(),
         start_date: z.string().optional(),
         end_date: z.string().optional(),
-        status: z.boolean().optional(),
+        status: z.string().optional(),
         project_image: z.string().optional(),
         // updated_at: z.string().optional(),
         // updated_by: z.string()  // ต้องมี updated_by เพื่อบันทึกว่าใครแก้ไข
