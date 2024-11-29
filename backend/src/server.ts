@@ -13,6 +13,8 @@ import { taskRouter } from "@modules/task/taskRouter";
 import { resourceRouter } from "@modules/resource/resourceRouter";
 import { roleRouter } from "@modules/role/roleRouter";
 import { planRouter } from "@modules/plan/planRouter";
+import { authRouter } from "@modules/auth/authRouter";
+import cookieParser from 'cookie-parser';
 
 const logger = pino({ name: "server start" });
 const app = express();
@@ -32,9 +34,14 @@ app.use("/v1/task",taskRouter);
 app.use("/v1/resource",resourceRouter);
 app.use("/v1/role",roleRouter);
 app.use("/v1/plan",planRouter);
+app.use("/v1/login",authRouter);
 
 
 // Error handlers
 app.use(errorHandler());
+
+// Add cookieParser middleware
+app.use(cookieParser());
+app.use('/v1/auth', authRouter);
 
 export { app, logger };
