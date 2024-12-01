@@ -213,6 +213,8 @@ const DialogEdit = ({
             });
     };
 
+    
+
     return (
         <Dialog.Root>
             <Dialog.Trigger>
@@ -266,7 +268,8 @@ const DialogEdit = ({
                                 <Select.Item value="Completed">Completed</Select.Item>
                                 <Select.Item value="Suspend operations">Suspend operations</Select.Item>
                             </Select.Content>
-                        </Select.Root>
+                        </Select.Root> 
+                        
                     </label>
                     <label>
                         <Text as="div" size="2" mb="1" weight="bold">

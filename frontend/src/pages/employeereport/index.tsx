@@ -1,6 +1,6 @@
 import ReportCard from "./components/ReportCard";
 
-export default function Report() {
+export default function EmployeeReport() {
   const handleViewReport = (type: string) => {
     alert(`Viewing ${type} report`);
   };
