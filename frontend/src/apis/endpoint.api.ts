@@ -27,3 +27,4 @@ export const GET_TASK_ALL = "/v1/task/get";
 export const CREATE_TASK = "/v1/task/create";
 export const UPDATE_TASK = "/v1/task/update";
 export const DELETE_TASK = "/v1/task/delete";
+

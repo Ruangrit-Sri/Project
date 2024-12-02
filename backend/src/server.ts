@@ -42,6 +42,5 @@ app.use(errorHandler());
 
 // Add cookieParser middleware
 app.use(cookieParser());
-app.use('/v1/auth', authRouter);
 
 export { app, logger };

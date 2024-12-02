@@ -29,7 +29,7 @@ export const authService = {
                     ResponseStatus.Failed,
                     "Incorrect password",
                     null,
-                    StatusCodes.NOT_FOUND
+                    StatusCodes.BAD_REQUEST
                 );
             }
 
