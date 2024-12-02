@@ -4,7 +4,7 @@ import { ResponseStatus, ServiceResponse } from "@common/models/serviceResponse"
 import { UserRepository } from "@modules/user/userRepository";
 import { TypePayloadUser } from "@modules/auth/authModel";
 import bcrypt from "bcrypt";
-import { generateAccessToken} from '@common/utils/jwt';
+import { generateAccessToken } from "@common/utils/jwt"; 
 
 export const authService = {
 
