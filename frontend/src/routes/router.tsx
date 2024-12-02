@@ -1,12 +1,23 @@
 // Manager
 import Dashboard from "@/pages/managerdashboard";
 import Planning from "@/pages/managertask";
-import Resource from "@/pages/managerresoue";
+import Resource from "@/pages/managerresource";
 import Report from "@/pages/managerreport";
+
+// Admin
+import AdminPage from "@/pages/admin";
+import AdminProjectPage from "@/pages/project";
+
+// Employee
+import EmployeePlanning from "@/pages/employeestask";
+import EmployeeResource from "@/pages/employeeresource";
+import EmployeeReprot from "@/pages/employeereport";
+
 
 // Navbar Sidebar
 import MainLayout from "@/components/layouts/layout.main";
 import MainLayoutManager from "@/components/layouts/layout.manager";
+import MainLayoutEmployee from "@/components/layouts/layout.employee";
 
 // React
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -16,10 +27,6 @@ import Error404 from "@/components/layouts/layout.error404";
 
 //templet
 import CategoriesPage from "@/pages/category";
-
-// Admin
-import AdminPage from "@/pages/admin";
-import AdminProjectPage from "@/pages/project";
 
 // login
 import Login from "@/pages/login";
@@ -72,7 +79,24 @@ const router = createBrowserRouter([
       },
     ],
 },
-   
+{
+  path: "/",
+  element: <MainLayoutEmployee />,
+  children: [
+    {
+      path: "/employeePlan",
+      element: <EmployeePlanning />,
+    },
+    {
+      path: "/employeeReport",
+      element: <EmployeeReprot />,
+    },
+    {
+      path: "/employeeResource",
+      element: <EmployeeResource />,
+    },
+  ],
+},
   {
       path: "*",
       element: <Error404 />,

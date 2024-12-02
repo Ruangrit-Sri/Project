@@ -21,3 +21,9 @@ export const GET_ROLE_ALL = "/v1/role/get";
 export const CREATE_ROLE = "/v1/role/create";
 export const UPDATE_ROLE = "/v1/role/update";
 export const DELETE_ROLE = "/v1/role/delete";
+
+//task
+export const GET_TASK_ALL = "/v1/task/get";
+export const CREATE_TASK = "/v1/task/create";
+export const UPDATE_TASK = "/v1/task/update";
+export const DELETE_TASK = "/v1/task/delete";
