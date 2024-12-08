@@ -34,7 +34,7 @@ app.use("/v1/task",taskRouter);
 app.use("/v1/resource",resourceRouter);
 app.use("/v1/role",roleRouter);
 app.use("/v1/plan",planRouter);
-app.use("/v1/login",authRouter);
+app.use("/v1/auth",authRouter);
 
 
 // Error handlers
