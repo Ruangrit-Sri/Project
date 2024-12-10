@@ -55,6 +55,7 @@ export default function AdminPage() {
                                                 user_id={user.user_id}
                                                 username={user.username}
                                                 role={user.role} 
+                                                project={user.projects?.project_id || ""} // Ensure a valid project ID is passed
                                             />
                                             <AlertDialogDelete
                                                 getUserDate={getUserData}
