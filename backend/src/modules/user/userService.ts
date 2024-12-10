@@ -50,6 +50,7 @@ export const userService = {
                 null,
                 StatusCodes.INTERNAL_SERVER_ERROR
             );
+            
         }
     },
 

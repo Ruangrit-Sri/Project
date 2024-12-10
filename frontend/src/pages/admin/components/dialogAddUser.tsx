@@ -72,7 +72,7 @@ const DialogAdd = ({ getUserData }: DialogUserProps) => {
         username: postUserName,
         password: postPassword,
         role: postRole,
-        project_name: postProject, // postProject จะเป็น null หากเลือก "No Project"
+        project_id: postProject, // postProject จะเป็น null หากเลือก "No Project"
       });
       if (response.statusCode === 200) {
         setPostUserName("");
@@ -161,6 +161,7 @@ const DialogAdd = ({ getUserData }: DialogUserProps) => {
                 size="2"
                 value={postProject || "none"} // กำหนดค่าเริ่มต้นเป็น "none" หากไม่มี Project
                 onValueChange={(value) => setPostProject(value === "none" ? null : value)} // แปลง "none" เป็น null
+                
               >
                 <Select.Trigger>
                   {postProject

@@ -59,7 +59,8 @@ export const UserRepository = { //Object
             created_by: payload.created_by,
             updated_by: payload.updated_by
         };
-
+        
+        console.log ('project_id:', setPayload.project_id);
         return await prisma.user.create({
             data: setPayload
         });
