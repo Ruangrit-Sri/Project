@@ -35,7 +35,7 @@ export default function AdminProjectPage() {
                             <Table.ColumnHeaderCell>Id</Table.ColumnHeaderCell>
                             <Table.ColumnHeaderCell>Project Name</Table.ColumnHeaderCell>
                             <Table.ColumnHeaderCell>Budget</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>Manager</Table.ColumnHeaderCell>
+                            <Table.ColumnHeaderCell>status</Table.ColumnHeaderCell>
                             <Table.ColumnHeaderCell>Actions</Table.ColumnHeaderCell>
                         </Table.Row>
                     </Table.Header>
@@ -46,7 +46,7 @@ export default function AdminProjectPage() {
                                     <Table.RowHeaderCell>{project.project_id}</Table.RowHeaderCell>
                                     <Table.Cell>{project.project_name}</Table.Cell>
                                     <Table.Cell>{project.budget}</Table.Cell>
-                                    <Table.Cell>User Name</Table.Cell>
+                                    <Table.Cell>{project.status}</Table.Cell>
                                     <Table.Cell>
                                         <Flex gap="2">
                                             <DialogEdit

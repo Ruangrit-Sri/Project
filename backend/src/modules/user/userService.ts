@@ -18,7 +18,7 @@ export const userService = {
         );
     },
 
-    // สร้างผู้ใช้ใหม่
+    //สร้างผู้ใช้ใหม่
     create: async (payload: TypePayloadUser) => {
         try {
             const checkUser = await UserRepository.findByUsername(payload.username);
@@ -53,6 +53,7 @@ export const userService = {
         }
     },
 
+    
     update: async (user_id: string, payload: Partial<TypePayloadUser>) => {
         try {
             // ตรวจสอบว่าผู้ใช้มีอยู่จริง

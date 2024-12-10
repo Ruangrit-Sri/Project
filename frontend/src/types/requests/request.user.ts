@@ -2,7 +2,7 @@ export type PayloadCreateUser = {
     username : string;
     password : string;
     role : string;
-    project_name: string
+    project_name?: string | null; // เพิ่ม null เพื่อรองรับ No Project
 };
 
 export type PayloadUpdateUser = {
@@ -10,7 +10,7 @@ export type PayloadUpdateUser = {
     username : string;
     password? : string;
     role : string;
-    project_name: string
+    project_name?: string
 }
 
 export type PayloadDeleteUser = {
