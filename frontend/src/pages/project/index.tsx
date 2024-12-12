@@ -9,6 +9,11 @@ import AlertDialogDelete from "./components/alertDialogDeletProject";
 export default function AdminProjectPage() {
     const [project, setProject] = useState<TypeProjectAll[]>([]);
 
+    // // ฟังก์ชันสำหรับจัดรูปแบบตัวเลข
+    // const formatNumber = (value: number) => {
+    //     return new Intl.NumberFormat("en-US").format(value);
+    // };
+
     const getProjectData = () => {
         getProject().then((res) => {
             console.log(res);
@@ -26,16 +31,16 @@ export default function AdminProjectPage() {
                 <Text as="div" size="4" weight="bold">
                     Project
                 </Text>
-                <DialogAdd getProjectData={getProjectData}  />
+                <DialogAdd getProjectData={getProjectData} />
             </Flex>
             <div className="w-full mt-2">
                 <Table.Root variant="surface">
                     <Table.Header>
                         <Table.Row>
-                            <Table.ColumnHeaderCell>Id</Table.ColumnHeaderCell>
+                            {/* <Table.ColumnHeaderCell>Id</Table.ColumnHeaderCell> */}
                             <Table.ColumnHeaderCell>Project Name</Table.ColumnHeaderCell>
                             <Table.ColumnHeaderCell>Budget</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>status</Table.ColumnHeaderCell>
+                            <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
                             <Table.ColumnHeaderCell>Actions</Table.ColumnHeaderCell>
                         </Table.Row>
                     </Table.Header>
@@ -43,9 +48,9 @@ export default function AdminProjectPage() {
                         {project &&
                             project.map((project: TypeProjectAll) => (
                                 <Table.Row key={project.project_id}>
-                                    <Table.RowHeaderCell>{project.project_id}</Table.RowHeaderCell>
+                                    {/* <Table.RowHeaderCell>{project.project_id}</Table.RowHeaderCell> */}
                                     <Table.Cell>{project.project_name}</Table.Cell>
-                                    <Table.Cell>{project.budget}</Table.Cell>
+                                    <Table.Cell>{new Intl.NumberFormat("en-US").format(project.budget)}</Table.Cell>
                                     <Table.Cell>{project.status}</Table.Cell>
                                     <Table.Cell>
                                         <Flex gap="2">
@@ -53,7 +58,7 @@ export default function AdminProjectPage() {
                                                 getProjectData={getProjectData}
                                                 project_id={project.project_id}
                                                 project_name={project.project_name}
-                                                budget={project.budget} 
+                                                budget={project.budget}
                                                 status={project.status}
                                                 start_date={project.start_date}
                                                 end_date={project.end_date}

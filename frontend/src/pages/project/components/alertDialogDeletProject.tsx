@@ -38,7 +38,7 @@ const AlertDialogDelete = ({getProjectDate, project_id, project_name}: DialogPro
         </Dialog.Trigger>
 
         <Dialog.Content maxWidth="450px">
-            <Dialog.Title>Delete User</Dialog.Title>
+            <Dialog.Title>Delete Project</Dialog.Title>
             <Flex direction="column" gap="3">
                 <label>
                     <Text size="2"><Strong>Id : </Strong>{project_id}</Text>
