@@ -33,7 +33,7 @@ export default function AdminPage() {
                 <Table.Root variant="surface">
                     <Table.Header>
                         <Table.Row>
-                            <Table.ColumnHeaderCell>Id</Table.ColumnHeaderCell>
+                            {/* <Table.ColumnHeaderCell>Id</Table.ColumnHeaderCell> */}
                             <Table.ColumnHeaderCell>Username</Table.ColumnHeaderCell>
                             <Table.ColumnHeaderCell>Role</Table.ColumnHeaderCell>
                             <Table.ColumnHeaderCell>Project</Table.ColumnHeaderCell>
@@ -44,7 +44,7 @@ export default function AdminPage() {
                         {user &&
                             user.map((user: TypeUserAll) => (
                                 <Table.Row key={user.user_id}>
-                                    <Table.RowHeaderCell>{user.user_id}</Table.RowHeaderCell>
+                                    {/* <Table.RowHeaderCell>{user.user_id}</Table.RowHeaderCell> */}
                                     <Table.Cell>{user.username}</Table.Cell>
                                     <Table.Cell>{user.role}</Table.Cell>
                                     <Table.Cell>{user.projects?.project_name} </Table.Cell>

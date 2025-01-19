@@ -41,6 +41,7 @@ model project {
   project_id     String     @id @default(uuid()) @db.Uuid
   project_name   String     @unique               
   budget         Decimal?   @db.Decimal(15, 2)           
+  actual         Decimal?    @db.Decimal(15, 2)   
   start_date     String                    
   end_date       String?                   
   status         String                

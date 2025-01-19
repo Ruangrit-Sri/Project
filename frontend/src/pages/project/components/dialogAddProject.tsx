@@ -145,6 +145,8 @@ type DialogProjectProps = {
 
 const DialogAdd = ({ getProjectData }: DialogProjectProps) => {
     const [projectName, setProjectName] = useState("");
+    const [actual, setActual] = useState(0);
+    const [formmattedActual, setFormattedActual] = useState("0");
     const [budget, setBudget] = useState(0);
     const [formattedBudget, setFormattedBudget] = useState("0"); // For displaying formatted budget
     const [status, setStatus] = useState("In progress"); // Default status
@@ -154,6 +156,13 @@ const DialogAdd = ({ getProjectData }: DialogProjectProps) => {
     const formatNumber = (value: number) => {
         return new Intl.NumberFormat("en-US").format(value);
     };
+
+    const handleActualChange = (event: any) => {
+        const value = event.target.value.replace(/,/g, "");
+        const numericValue = value === "" ? 0 : Number(value);
+        setActual(numericValue);
+        setFormattedActual(formatNumber(numericValue));
+    }
 
     const handleBudgetChange = (event: any) => {
         const value = event.target.value.replace(/,/g, ""); // Remove commas for parsing
@@ -168,11 +177,12 @@ const DialogAdd = ({ getProjectData }: DialogProjectProps) => {
             return;
         }
 
-        postProject({ project_name: projectName, budget, status, start_date: startDate, end_date: endDate })
+        postProject({ project_name: projectName, actual, budget, status, start_date: startDate, end_date: endDate })
             .then((response) => {
                 if (response.statusCode === 200) {
                     // Clear form fields
                     setProjectName("");
+                    setActual(0);
                     setBudget(0);
                     setFormattedBudget("0");
                     setStatus("In progress");
@@ -220,6 +230,18 @@ const DialogAdd = ({ getProjectData }: DialogProjectProps) => {
                             type="text"
                             value={formattedBudget}
                             onChange={handleBudgetChange}
+                        />
+                    </label>
+                    <label>
+                        <Text as="div" size="2" mb="1" weight="bold">
+                            Actual
+                        </Text>
+                        <TextField.Root
+                            defaultValue=""
+                            placeholder="Enter actual"
+                            type="text"
+                            value={formmattedActual}
+                            onChange={handleActualChange}
                         />
                     </label>
                     <label>

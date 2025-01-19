@@ -4,14 +4,14 @@ import { PayloadCreateTask , PayloadDeleteTask ,PayloadUpdateTask} from "@/types
 import { TaskResponse } from "@/types/response/response.task";
 
   
-  export const getRole = async () => {
+  export const getTask = async () => {
     const { data: response} = await mainApi.get(
         GET_TASK_ALL
     );
     return response;
 };
 
-export const postRole = async (data: PayloadCreateTask) => {
+export const postTask = async (data: PayloadCreateTask) => {
   const { data: response } = await mainApi.post<TaskResponse>(
       CREATE_TASK,
       data
@@ -19,7 +19,7 @@ export const postRole = async (data: PayloadCreateTask) => {
   return response;
 }
 
-export const patchRole = async (data: PayloadUpdateTask) => {
+export const patchTask = async (data: PayloadUpdateTask) => {
   const { data: response } = await mainApi.put<TaskResponse>(
       UPDATE_TASK,
       data
@@ -28,7 +28,7 @@ export const patchRole = async (data: PayloadUpdateTask) => {
 }
 
 
-export const deleteRole = async (data: PayloadDeleteTask) => {
+export const deleteTask = async (data: PayloadDeleteTask) => {
   const { data: response } = await mainApi.delete<TaskResponse>(
         DELETE_TASK + "/" + data.task_id
   );

@@ -5,6 +5,7 @@ import { TypePayloadProject } from "@modules/project/projectModel";
 export const Keys = [
     "project_id",
     "project_name",
+    "actual",
     "budget",
     "start_date",
     "end_date",
@@ -23,6 +24,7 @@ export const ProjectRepository = {
             select: {
                 project_id: true,
                 project_name: true,
+                actual: true,
                 budget: true,  
                 start_date: true,
                 end_date: true,
@@ -42,6 +44,7 @@ export const ProjectRepository = {
             select: {
                 project_id: true,
                 project_name: true,
+                actual: true,
                 budget: true,
                 start_date: true,
                 end_date: true,
@@ -74,6 +77,7 @@ export const ProjectRepository = {
         const startDate = payload.start_date;
         const setPayload: any = {
             project_name: project_name,
+            actual: payload.actual,
             budget: payload.budget,
             start_date: startDate,
             end_date: payload.end_date,

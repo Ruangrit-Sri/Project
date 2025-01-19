@@ -1,6 +1,7 @@
 export type TypeProjectAll = {
     project_id : string;
     project_name : string;
+    actual : number;
     budget : number;
     status : boolean;
     start_date : string;
@@ -15,6 +16,7 @@ export type TypeProjectAll = {
 export type TypeProject = {
     project_id : string;
     project_name : string;
+    actual : number;
     budget : number;
     status : string;
     start_date : string;

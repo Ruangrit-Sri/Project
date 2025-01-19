@@ -5,6 +5,7 @@ import { z } from "zod";
 export type TypePayloadProject = {
     project_name: string;
     budget: number;   // อาจมี budget ในการอัปเดตด้วย
+    actual: number;
     start_date?: string;
     end_date?: string;
     status: string;
@@ -19,7 +20,8 @@ export type TypePayloadProject = {
 export const CreateProjectSchema = z.object({
     body: z.object({
         project_name: z.string().max(50),
-        budget: z.number().optional(),         
+        budget: z.number().optional(),       
+        actual: z.number().optional(),  
         start_date: z.string().optional(),
         end_date: z.string().optional(),
         status: z.string().optional(),
@@ -37,6 +39,7 @@ export const UpdateProjectSchema = z.object({
     body: z.object({
         project_id: z.string().uuid(),
         project_name: z.string().max(50).optional(),
+        actual: z.number().optional(),  
         budget: z.number().optional(),
         start_date: z.string().optional(),
         end_date: z.string().optional(),
