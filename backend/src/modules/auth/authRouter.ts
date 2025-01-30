@@ -2,6 +2,8 @@ import express, { Request, Response } from "express";
 import { handleServiceResponse, validateRequest } from "@common/utils/httpHandlers";
 import { authService } from "@modules/auth/authService";
 import { LoginUserSchema } from "@modules/auth/authModel";
+import { authenticateJWT } from "@common/middleware/authMiddleware";
+
 
 export const authRouter = (() => {
     const router = express.Router();
@@ -13,6 +15,10 @@ export const authRouter = (() => {
         const serviceResponse = await authService.login(payload, res);
         handleServiceResponse(serviceResponse, res);
     });
+
+    // router.get("/protected", authenticateJWT, (req: Request, res: Response) => {
+    //     res.json({ message: "This is a protected route", user: req.user });
+    //   });
 
     // router.post('/login', async (req: Request, res: Response) => {
     //     const { username, password } = req.body;
