@@ -26,6 +26,8 @@ export const ResourceRepository = {
                 cost: true,
                 total: true,
                 quantity: true,
+                task_id: true, // เพิ่ม task_id
+                tasks: { select: { task_name: true } }, // ดึงชื่อ Task
                 created_at: true,
                 created_by: true,
                 updated_at: true,
@@ -69,6 +71,7 @@ export const ResourceRepository = {
             cost: payload.cost,
             total: payload.total,
             quantity: payload.quantity,
+            task_id: payload.task_id,
         };
 
         return prisma.resource.create({

@@ -2,6 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import { ResponseStatus, ServiceResponse } from "@common/models/serviceResponse";
 import { TaskRepository } from "@modules/task/taskRepository";
 import { TypePayloadTask } from "@modules/task/taskModel";
+import { ProjectRepository } from "@modules/project/projectRepository";
 import { task } from "@prisma/client";
 
 export const taskService = {
@@ -16,18 +17,21 @@ export const taskService = {
         );
     },
 
-    // สร้าง task ใหม่
     create: async (payload: TypePayloadTask) => {
         try {
-            const checkTask = await TaskRepository.findByName(payload.task_name);
-            if (checkTask) {
-                return new ServiceResponse(
-                    ResponseStatus.Failed,
-                    "Task name already taken",
-                    null,
-                    StatusCodes.BAD_REQUEST
-                );
+            // ตรวจสอบว่าโปรเจกต์มีอยู่หรือไม่
+            if (payload.project_id) {
+                const projectExists = await ProjectRepository.findById(payload.project_id);
+                if (!projectExists) {
+                    return new ServiceResponse(
+                        ResponseStatus.Failed,
+                        "Project not found",
+                        null,
+                        StatusCodes.NOT_FOUND
+                    );
+                }
             }
+    
             const task = await TaskRepository.create(payload);
             return new ServiceResponse<task>(
                 ResponseStatus.Success,
@@ -36,10 +40,9 @@ export const taskService = {
                 StatusCodes.OK
             );
         } catch (ex) {
-            const errorMessage = "Error creating task: " + (ex as Error).message;
             return new ServiceResponse(
                 ResponseStatus.Failed,
-                errorMessage,
+                "Error creating task: " + (ex as Error).message,
                 null,
                 StatusCodes.INTERNAL_SERVER_ERROR
             );
@@ -48,6 +51,20 @@ export const taskService = {
 
     // อัปเดต task
     update: async (task_id: string, payload: Partial<TypePayloadTask>) => {
+
+        // ถ้ามีการส่ง project_id ใหม่มาตรวจสอบว่าโปรเจกต์มีอยู่จริง
+        if (payload.project_id) {
+            const existingProject = await ProjectRepository.findById(payload.project_id);
+            if (!existingProject) {
+                return new ServiceResponse(
+                    ResponseStatus.Failed,
+                    "Not found project",
+                    null,
+                    StatusCodes.NOT_FOUND
+                );
+            }
+        }
+
         try {
             // ตรวจสอบว่า Task มีอยู่หรือไม่
             const existingTask = await TaskRepository.findById(task_id); // ต้องเพิ่ม findById ใน TaskRepository

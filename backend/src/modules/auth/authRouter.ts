@@ -14,6 +14,12 @@ export const authRouter = (() => {
         handleServiceResponse(serviceResponse, res);
     });
 
+    // // Logout a user
+    // router.post("/logout", async (req: Request, res: Response) => {
+    //     const serviceResponse = await authService.logout(res);
+    //     handleServiceResponse(serviceResponse, res);
+    // });
+
     // router.post('/login', async (req: Request, res: Response) => {
     //     const { username, password } = req.body;
       

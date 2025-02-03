@@ -55,6 +55,7 @@ model project {
   created        user?      @relation("ProjectCreatedBy", fields: [created_by], references: [user_id])
   updated        user?      @relation("ProjectUpdatedBy", fields: [updated_by], references: [user_id])
   users          user[]     
+  tasks          task[]
 }
 
 // User Model
@@ -107,6 +108,7 @@ model role {
 // Task Model
 model task {
   task_id         String     @id @default(uuid()) @db.Uuid
+  project_id    String?  @db.Uuid
   task_name       String     @db.VarChar(255) @unique
   description     String?
   budget          Decimal    @db.Decimal(15, 2)
@@ -121,6 +123,8 @@ model task {
   // Relations
   created         user?      @relation("TaskCreatedBy", fields: [created_by], references: [user_id])
   updated         user?      @relation("TaskUpdatedBy", fields: [updated_by], references: [user_id])
+  projects      project?   @relation(fields: [project_id], references: [project_id])
+  resources     resource []
 }
 
 // Plan Model
@@ -141,11 +145,12 @@ model plan {
 // Resource Model
 model resource {
   resource_id   String     @id @default(uuid()) @db.Uuid
+  task_id    String?  @db.Uuid
   cost          Decimal    @default(0.00) @db.Decimal(15, 2)
-  total         Decimal    @default(0.00) @db.Decimal(15, 2)
+  total         Decimal    @default(0.00) @db.Decimal(15, 2) // เอาเก็บค่าที่ * เสร็จแล้ว
   resource_name String     @db.VarChar(255) @unique
   resource_type String     @db.VarChar(255)
-  quantity      Int        @default(0)
+  quantity      Int        @default(0) //เอาไว้ * กับ cost
   created_at    DateTime   @default(now())
   created_by    String?    @db.Uuid
   updated_at    DateTime?  @updatedAt
@@ -154,4 +159,6 @@ model resource {
   // Relations
   created       user?      @relation("ResourceCreatedBy", fields: [created_by], references: [user_id])
   updated       user?      @relation("ResourceUpdatedBy", fields: [updated_by], references: [user_id])
+  // projects      project?   @relation(fields: [project_id], references: [project_id])
+  tasks      task?   @relation(fields: [task_id], references: [task_id])
 }

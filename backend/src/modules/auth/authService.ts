@@ -57,6 +57,32 @@ export const authService = {
             );
         }
     },
+
+    // // Logout a user
+    // logout: async (res: any) => {
+    //     try {
+    //         res.clearCookie('token', {
+    //             httpOnly: true,
+    //             secure: process.env.NODE_ENV === 'production',
+    //             sameSite: 'strict',
+    //         });
+
+    //         return new ServiceResponse(
+    //             ResponseStatus.Success,
+    //             "Logout success",
+    //             null,
+    //             StatusCodes.OK
+    //         );
+    //     } catch (ex) {
+    //         const errorMessage = "Error logout user: " + (ex as Error).message;
+    //         return new ServiceResponse(
+    //             ResponseStatus.Failed,
+    //             errorMessage,
+    //             null,
+    //             StatusCodes.INTERNAL_SERVER_ERROR
+    //         );
+    //     }
+    // },
 };
 
 //ตรวจสอบฐานข้อมูล และจัดการ Logic

@@ -5,6 +5,7 @@ import { TypePayloadTask } from "@modules/task/taskModel";
 // Define keys to use in the select queries
 export const TaskKeys = [
   "task_id",
+  "project_id",
   "task_name",
   "description",
   "budget",
@@ -21,19 +22,7 @@ export const TaskRepository = {
   // Get all tasks
   findAllAsync: async () => {
     return prisma.task.findMany({
-      select: {
-        task_id: true,
-        task_name: true,
-        description: true,
-        budget: true,
-        start_date: true,
-        end_date: true,
-        status: true,
-        // created_at: true,
-        // created_by: true,
-        // updated_at: true,
-        // updated_by: true
-      }
+      include: { projects: true }, // ดึงข้อมูลโปรเจกต์ของแต่ละ Task
     });
   },
 
@@ -61,6 +50,7 @@ export const TaskRepository = {
     const task_name = payload.task_name.trim();
     const startDate = payload.start_date;
     const setPayload: any = {
+      project_id:payload.project_id,
       task_name: task_name,
       description: payload.description,
       budget: payload.budget,

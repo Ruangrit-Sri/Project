@@ -63,6 +63,7 @@ const Login: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include', // อนุญาตให้ browser จัดการ cookie
         body: JSON.stringify({ username, password }),
       });
 

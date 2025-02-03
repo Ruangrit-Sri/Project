@@ -30,3 +30,4 @@ export const DELETE_TASK = "/v1/task/delete";
 
 // login
 export const LOGIN = "/v1/auth/login";
+// export const LOGOUT = "/v1/auth/logout";

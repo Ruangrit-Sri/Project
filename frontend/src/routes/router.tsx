@@ -35,6 +35,7 @@ import Login from "@/pages/login";
 const router = createBrowserRouter([  
     {
       index: true,
+      path: "/",
       element: <Login />,
     },
 

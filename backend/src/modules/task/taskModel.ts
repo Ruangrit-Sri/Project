@@ -2,6 +2,7 @@ import { z } from "zod";
 
 // ประเภทข้อมูลสำหรับ payload ของงาน (Task)
 export type TypePayloadTask = {
+  project_id?: string | null;
   task_name: string;
   description?: string;
   budget?: number;
@@ -17,6 +18,7 @@ export type TypePayloadTask = {
 // Schema สำหรับการสร้าง Task ใหม่
 export const CreateTaskSchema = z.object({
   body: z.object({
+    project_id: z.string().uuid().nullable().optional(),
     task_name: z.string().max(255),
     description: z.string().optional(),
     budget: z.number(),
@@ -34,6 +36,7 @@ export const CreateTaskSchema = z.object({
 export const UpdateTaskSchema = z.object({
   body: z.object({
     task_id: z.string().uuid(), // ต้องระบุ task_id เพื่อทำการอัปเดต
+    project_id: z.string().uuid() .nullable() .optional(),
     task_name: z.string().max(255).optional(),
     description: z.string().optional(),
     budget: z.number().optional(),
