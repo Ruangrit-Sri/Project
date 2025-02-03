@@ -3,7 +3,9 @@ import express, {Request, Response, Router} from "express";
 import { handleServiceResponse, validateRequest } from "@common/utils/httpHandlers";
 import { categoryService } from "@modules/categories/categoryService";
 import { CreateCategorySchema, UpdateCategorySchema, GetCategorySchema, GetParamCategorySchema } from "@modules/categories/categoryModel";
-
+import { authenticateJWT } from "@common/middleware/authMiddleware";
+import { group } from "console";
+import roleGroup1 from "@common/middleware/roleGroup1";
 
 export const categoryRouter = (() => {
     const router = express.Router();
@@ -13,7 +15,10 @@ export const categoryRouter = (() => {
         handleServiceResponse(ServiceResponse, res);
     })
 
-    router.post("/create", validateRequest(CreateCategorySchema),  async (req: Request, res: Response) => {
+    router.post("/create", 
+        authenticateJWT,
+        roleGroup1,
+        validateRequest(CreateCategorySchema),  async (req: Request, res: Response) => {
         const payload = req.body;
         const ServiceResponse = await categoryService.create(payload);
         handleServiceResponse(ServiceResponse, res);
