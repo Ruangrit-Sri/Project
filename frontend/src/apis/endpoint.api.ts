@@ -28,6 +28,12 @@ export const CREATE_TASK = "/v1/task/create";
 export const UPDATE_TASK = "/v1/task/update";
 export const DELETE_TASK = "/v1/task/delete";
 
+//resource
+export const GET_RESOURCE_ALL = "/v1/resource/get"
+export const CREATE_RESOURCE = "/v1/resource/create"
+export const UPDATE_RESOURCE = "/v1/resource/update"
+export const DELETE_RESOURCE = "/v1/resource/delete"
+
 // login
 export const LOGIN = "/v1/auth/login";
 // export const LOGOUT = "/v1/auth/logout";

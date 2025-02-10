@@ -148,7 +148,7 @@ model resource {
   task_id    String?  @db.Uuid
   cost          Decimal    @default(0.00) @db.Decimal(15, 2)
   total         Decimal    @default(0.00) @db.Decimal(15, 2) // เอาเก็บค่าที่ * เสร็จแล้ว
-  resource_name String     @db.VarChar(255) @unique
+  resource_name String     @db.VarChar(255)
   resource_type String     @db.VarChar(255)
   quantity      Int        @default(0) //เอาไว้ * กับ cost
   created_at    DateTime   @default(now())

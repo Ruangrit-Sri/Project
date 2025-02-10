@@ -9,11 +9,6 @@ import AlertDialogDelete from "./components/alertDialogDeletProject";
 export default function AdminProjectPage() {
     const [project, setProject] = useState<TypeProjectAll[]>([]);
 
-    // // ฟังก์ชันสำหรับจัดรูปแบบตัวเลข
-    // const formatNumber = (value: number) => {
-    //     return new Intl.NumberFormat("en-US").format(value);
-    // };
-
     const getProjectData = () => {
         getProject().then((res) => {
             console.log(res);

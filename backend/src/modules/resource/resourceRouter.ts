@@ -28,8 +28,8 @@ export const resourceRouter = (() => {
     });
 
     // DELETE a resource
-    router.delete("/delete", validateRequest(DeleteResourceSchema), async (req: Request, res: Response) => {
-        const { resource_id } = req.body;
+    router.delete("/delete/:resource_id", validateRequest(DeleteResourceSchema), async (req: Request, res: Response) => {
+        const { resource_id } = req.params;
         const ServiceResponse = await resourceService.delete(resource_id);
         handleServiceResponse(ServiceResponse, res);
     });

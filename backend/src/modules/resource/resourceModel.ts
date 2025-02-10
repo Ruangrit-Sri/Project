@@ -37,7 +37,7 @@ export const UpdateResourceSchema = z.object({
 
 // Schema สำหรับการลบทรัพยากร
 export const DeleteResourceSchema = z.object({
-    body: z.object({
+    params: z.object({
         resource_id: z.string().uuid(),
     }),
 });
