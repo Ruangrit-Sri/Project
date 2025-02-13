@@ -108,8 +108,8 @@ model role {
 // Task Model
 model task {
   task_id         String     @id @default(uuid()) @db.Uuid
-  project_id    String?  @db.Uuid
-  task_name       String     @db.VarChar(255) @unique
+  project_id    String?      @db.Uuid
+  task_name       String     @db.VarChar(255)
   description     String?
   budget          Decimal    @db.Decimal(15, 2)
   start_date      String
