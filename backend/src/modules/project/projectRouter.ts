@@ -3,12 +3,12 @@ import { handleServiceResponse, validateRequest } from "@common/utils/httpHandle
 import { projectService } from "@modules/project/projectService";
 import { CreateProjectSchema } from "@modules/project/projectModel";
 import { UpdateProjectSchema, DeleteProjectSchema } from "@modules/project/projectModel";
-
+import { authenticateJWT } from "@common/middleware/authMiddleware";
 export const projectRouter = (() => {
     const router = express.Router();
 
     // GET all projects
-    router.get("/get", async (req: Request, res: Response) => {
+    router.get("/get", authenticateJWT, async (req: Request, res: Response) => {
         const ServiceResponse = await projectService.findAll();
         handleServiceResponse(ServiceResponse, res);
     });

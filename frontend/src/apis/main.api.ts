@@ -4,6 +4,7 @@ import { appConfig } from "@/configs/app.config";
 const mainApi = axios.create({
   baseURL: appConfig.baseApi,
   timeout: 10000,
+  withCredentials: true,
   validateStatus: (status) => status < 500,
 });
 
