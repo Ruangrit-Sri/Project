@@ -68,7 +68,7 @@ const DialogAdd = ({ getProjectData }: DialogProjectProps) => {
     return (
         <Dialog.Root>
             <Dialog.Trigger>
-                <Button size="1">Create</Button>
+                <Button className="cursor-pointer" size="1">Create</Button>
             </Dialog.Trigger>
             <Dialog.Content maxWidth="450px">
                 <Dialog.Title>Create Project</Dialog.Title>
@@ -115,7 +115,7 @@ const DialogAdd = ({ getProjectData }: DialogProjectProps) => {
                             defaultValue="In progress"
                             onValueChange={(status: string) => setStatus(status)}
                         >
-                            <Select.Trigger className="select-trigger">
+                            <Select.Trigger className="select-trigger"  >
                                 {status} {/* Display the selected status */}
                             </Select.Trigger>
                             <Select.Content>
@@ -130,7 +130,7 @@ const DialogAdd = ({ getProjectData }: DialogProjectProps) => {
                         <Text as="div" size="2" mb="1" weight="bold">
                             Start Date
                         </Text>
-                        <TextField.Root
+                        <TextField.Root 
                             defaultValue=""
                             placeholder="Enter start date (YYYY-MM-DD)"
                             type="date"
@@ -151,12 +151,12 @@ const DialogAdd = ({ getProjectData }: DialogProjectProps) => {
                 </Flex>
                 <Flex gap="3" mt="4" justify="end">
                     <Dialog.Close>
-                        <Button variant="soft" color="gray">
+                        <Button className="cursor-pointer" variant="soft" color="gray">
                             Cancel
                         </Button>
                     </Dialog.Close>
                     <Dialog.Close>
-                        <Button onClick={handleCreateProject}>Save</Button>
+                        <Button className="cursor-pointer" onClick={handleCreateProject}>Save</Button>
                     </Dialog.Close>
                 </Flex>
             </Dialog.Content>
